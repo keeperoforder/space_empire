@@ -3,6 +3,7 @@ import pygame
 from pathlib import Path
 import os
 import sys
+import uuid
 
 import config
 from graphics.camera import Camera
@@ -27,7 +28,7 @@ from progression import GameProgression
 
 
 class Game:
-    def __init__(self, load_saved: bool = True, developer_mode: bool = False) -> None:
+    def __init__(self, load_saved: bool = True, developer_mode: bool = False, automated_test: bool = False) -> None:
         pygame.init()
         pygame.display.set_caption(config.WINDOW_TITLE)
 
@@ -35,13 +36,19 @@ class Game:
         self.screen = self._create_display()
         self.clock = pygame.time.Clock()
         self.running = True
+        self.return_to_menu = False
         self.delta_time = 0.0
         self.fps = 0.0
         self._fps_font = pygame.font.SysFont('consolas', 12)
 
         self.developer_mode_enabled = bool(developer_mode)
         self.dev_save_dir = Path(__file__).resolve().parent / "saves" / "developer"
-        save_path = self.dev_save_dir / "developer_save.json" if developer_mode else "saves/space_empire_save.json"
+        self.automated_test_mode = bool(automated_test)
+        self.automated_test_run_id = uuid.uuid4().hex[:12] if automated_test else None
+        test_dir = self.dev_save_dir / "automated_test" / self.automated_test_run_id if automated_test else self.dev_save_dir / "automated_test"
+        save_path = (test_dir / "test_save.json" if automated_test else
+                     self.dev_save_dir / "developer_save.json" if developer_mode else
+                     "saves/space_empire_save.json")
         self.save_manager = SaveManager(path=save_path)
         if not load_saved and not developer_mode:
             # Normal new-game archival is unchanged; Developer Mode has its own slot.
@@ -68,9 +75,11 @@ class Game:
         if getattr(sys, "frozen", False):
             data_root = Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming")) / "SpaceEmpire"
             data_root.mkdir(parents=True, exist_ok=True)
-            technology_save_path = data_root / "technology_progress.json"
+            technology_save_path = (test_dir / "technology_progress.json" if automated_test
+                                     else data_root / "technology_progress.json")
         else:
-            technology_save_path = (self.dev_save_dir / "technology_progress.json"
+            technology_save_path = (test_dir / "technology_progress.json" if automated_test else
+                                     self.dev_save_dir / "technology_progress.json"
                                      if developer_mode else
                                      Path(__file__).resolve().parent / "technology" / "progress.json")
         if not load_saved and not developer_mode and technology_save_path.exists():
@@ -157,6 +166,12 @@ class Game:
         return pygame.display.set_mode(
             (config.WINDOW_WIDTH, config.WINDOW_HEIGHT), pygame.RESIZABLE
         )
+
+    def request_main_menu(self) -> None:
+        """Save the current session and ask the launcher to show its menu."""
+        self.safe_save()
+        self.return_to_menu = True
+        self.running = False
 
     def toggle_fullscreen(self) -> None:
         self.is_fullscreen = not self.is_fullscreen
@@ -273,6 +288,8 @@ class Game:
         self.fleet_visuals.update(dt)
         self.economy.update(dt)
         self.hud.update(dt)
+        if self.dev_tools:
+            self.dev_tools.update_automated_test(dt)
         self._save_timer += dt
         if self._save_timer >= 30.0:
             self.safe_save()
@@ -313,7 +330,7 @@ class Game:
             print(f"Space Empire save failed: {exc}", file=sys.stderr)
             return False
 
-    def run(self) -> None:
+    def run(self) -> str:
         try:
             while self.running:
                 self.delta_time = min(0.1, self.clock.tick(config.TARGET_FPS) / 1000.0)
@@ -328,6 +345,7 @@ class Game:
                 self.safe_save()
             finally:
                 pygame.quit()
+        return "main_menu" if self.return_to_menu else "exit"
 
 
 if __name__ == "__main__":

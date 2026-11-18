@@ -6,8 +6,9 @@ import sys
 from pathlib import Path
 from ui import theme
 class SettingsPanel:
-    def __init__(self,game,bottom):
+    def __init__(self,game,bottom,on_main_menu=None):
         self.game,self.bottom=game,bottom
+        self.on_main_menu=on_main_menu or getattr(game,"request_main_menu",None)
         self.visible=False
         self.rects={}
     def open(self): self.visible=True
@@ -40,6 +41,12 @@ class SettingsPanel:
                     elif key=="save_exit":
                         self.game.safe_save(); self.game.running=False
                     elif key=="close": self.close()
+                    elif key=="main_menu":
+                        self.game.safe_save()
+                        self.close()
+                        if self.on_main_menu is None:
+                            raise RuntimeError("Main-menu transition callback is not configured")
+                        self.on_main_menu()
                     return True
             return True
         return event.type in (pygame.MOUSEMOTION,pygame.MOUSEWHEEL)
@@ -47,7 +54,7 @@ class SettingsPanel:
         if not self.visible: return
         w,h=surface.get_size()
         shade=pygame.Surface((w,h),pygame.SRCALPHA); shade.fill((1,5,15,190)); surface.blit(shade,(0,0))
-        panel=pygame.Rect(max(18,w//2-240),max(80,h//2-205),min(480,w-36),410)
+        panel=pygame.Rect(max(18,w//2-240),max(60,h//2-240),min(480,w-36),480)
         theme.panel(surface,panel,fill=(7,17,32)); theme.label(surface,"НАЛАШТУВАННЯ",(panel.x+24,panel.y+22),22,theme.CYAN,True)
         audio=getattr(self.game,"audio_manager",None)
         rows=[
@@ -56,10 +63,18 @@ class SettingsPanel:
             ("sound","Звукові ефекти: "+("УВІМК." if audio and audio.enabled else "ВИМК.")),
             ("save_exit","Зберегти та вийти"),
             ("close","Повернутися до гри"),
+            ("main_menu","Головне меню"),
         ]
         self.rects={}
         for i,(key,label) in enumerate(rows):
-            r=pygame.Rect(panel.x+24,panel.y+76+i*59,panel.width-48,46); self.rects[key]=r
-            pygame.draw.rect(surface,(14,42,62),r,border_radius=6); pygame.draw.rect(surface,theme.BORDER_BRIGHT,r,1,border_radius=6)
-            theme.label(surface,label,(r.x+13,r.y+13),14,theme.TEXT,True)
+            r=pygame.Rect(panel.x+24,panel.y+68+i*55,panel.width-48,44); self.rects[key]=r
+            if key == "main_menu":
+                pygame.draw.rect(surface, (17, 71, 91), r, border_radius=6)
+                pygame.draw.rect(surface, (77, 218, 244), r, 2, border_radius=6)
+                text_color = (236, 252, 255)
+            else:
+                pygame.draw.rect(surface,(14,42,62),r,border_radius=6)
+                pygame.draw.rect(surface,theme.BORDER_BRIGHT,r,1,border_radius=6)
+                text_color = theme.TEXT
+            theme.label(surface,label,(r.x+13,r.y+12),14,text_color,True)
         theme.label(surface,"Esc — закрити це вікно",(panel.x+24,panel.bottom-27),10,theme.MUTED)

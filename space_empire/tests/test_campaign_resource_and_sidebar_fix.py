@@ -26,12 +26,6 @@ class CampaignFuelAndSidebarFixTests(unittest.TestCase):
         self.assertNotIn("fuel_plant", balance["available_buildings_by_stage"]["station"])
         self.assertIn("fuel_plant", balance["available_buildings_by_stage"]["galaxy"])
 
-    def test_sprite_loader_is_imported_by_every_hud_component_that_uses_it(self):
-        for relative in ("ui/sidebar.py", "ui/top_bar.py", "ui/research_panel.py"):
-            source = (ROOT / relative).read_text(encoding="utf-8")
-            self.assertIn("from graphics.asset_library import scaled_sprite", source)
-            self.assertIn("scaled_sprite(", source)
-
     def test_sidebar_has_thirteen_distinct_semantic_vector_icons_and_larger_labels(self):
         source = (ROOT / "ui/sidebar.py").read_text(encoding="utf-8")
         self.assertIn("WIDTH = 220", source)

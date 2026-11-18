@@ -23,6 +23,8 @@ class DeveloperMode:
         self.selected_mission_index = 0
         self.amount_entry = False
         self.amount_buffer = ""
+        self.manual_mutations = False
+        self.automated_tester = None
 
     @property
     def speed(self):
@@ -268,6 +270,24 @@ class DeveloperMode:
         self.log(f"Campaign diagnostics written: {out.name}")
         return out
 
+    def start_automated_test(self):
+        # Reinitialize this Game object, not the application process, with a new
+        # run-scoped save and a fresh progression/economy state.
+        game = self.game
+        audio = getattr(game, "audio_manager", None)
+        from game import Game
+        Game.__init__(game, load_saved=False, developer_mode=True, automated_test=True)
+        game.audio_manager = audio
+        from developer.automated_tester import AutomatedCampaignTester
+        game.dev_tools.automated_tester = AutomatedCampaignTester(game)
+        ok, message = game.dev_tools.automated_tester.start()
+        game.dev_tools.log(message)
+        return ok
+
+    def update_automated_test(self, dt):
+        if self.automated_tester:
+            self.automated_tester.update(dt)
+
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN and self.amount_entry:
             if event.key == pygame.K_RETURN:
@@ -322,6 +342,13 @@ class DeveloperMode:
         for key, rect in self.buttons.items():
             if rect.collidepoint(event.pos):
                 actions = {
+                    "play_test": self.start_automated_test,
+                    "pause": lambda: (self.automated_tester.pause() if self.automated_tester else None, setattr(self, "paused", True)),
+                    "resume": lambda: (self.automated_tester.resume() if self.automated_tester else None, setattr(self, "paused", False)),
+                    "stop_test": lambda: self.automated_tester.stop() if self.automated_tester else None,
+                    "restart_test": self.start_automated_test,
+                    "export_error": lambda: self.automated_tester.export_error_report() if self.automated_tester else self.automated_campaign_audit(),
+                    "export_full": lambda: self.automated_tester.export_full_report() if self.automated_tester else self.automated_campaign_audit(),
                     "pause": lambda: setattr(self, "paused", True),
                     "resume": lambda: setattr(self, "paused", False),
                     "speed": lambda: setattr(self, "speed_index", (self.speed_index+1)%len(SPEEDS)),
@@ -381,13 +408,20 @@ class DeveloperMode:
         y+=5
         txt("ACTIONS",x,y,title,(100,220,255)); y+=28
         self.buttons={}
-        specs=[("metal","+100 metal"),("energy","+100 energy"),("fuel","+50 fuel"),
+        self.buttons["play_test"] = pygame.Rect(x, y, panel.width-28, 30)
+        play_rect = self.buttons["play_test"]
+        pygame.draw.rect(surface, (12, 76, 96), play_rect, border_radius=6)
+        pygame.draw.rect(surface, (78, 220, 244), play_rect, 2, border_radius=6)
+        play_label = small.render("▶ PLAY — START AUTOMATED TEST", True, (235, 251, 255))
+        surface.blit(play_label, play_label.get_rect(center=play_rect.center))
+        y += 36
+        specs=[("pause","PAUSE"),("resume","RESUME"),("stop_test","STOP TEST"),("restart_test","RESTART TEST"),("export_error","EXPORT ERROR REPORT"),("export_full","EXPORT FULL TEST REPORT"),("metal","+100 metal"),("energy","+100 energy"),("fuel","+50 fuel"),
                ("crystals","+50 crystals"),("credits","+500 credits"),("science","+50 science"),
                ("instant_build","Finish construction"),("research","Finish research"),
                ("techs","Unlock all technologies"),("buildings","Unlock all buildings"),
                ("ships","Enable ship testing"),("complete","Complete mission"),
                ("skip","Next mission"),("reset","Reset missions"),("audit","Run campaign audit"),
-               ("speed",f"Speed: {self.speed}x"),("pause","Pause"),("resume","Resume")]
+               ("speed",f"Speed: {self.speed}x")]
         bw=(panel.width-36)//2
         for i,(key,label) in enumerate(specs):
             col=i%2; row=i//2
@@ -402,6 +436,17 @@ class DeveloperMode:
             y += 16
             txt(f"Set {self.selected_resource}: {self.amount_buffer}_  [ENTER]",x,y,small,(255,215,130))
         y += 16
+        if self.automated_tester:
+            tester=self.automated_tester
+            chapter=tester._chapter_for(tester.current_mission_id) if tester.current_mission_id else None
+            txt(f"AUTO: {tester.state} | {len(tester.results)}/{len(self.game.campaign_manager.missions)} missions",x,y,small,(100,225,180)); y+=15
+            txt(f"Chapter: {chapter['title'] if chapter else '—'} | Mission: {tester.current_mission_id or '—'}",x,y,small); y+=15
+            txt("Step: "+tester.current_step,x,y,small,(255,205,120)); y+=15
+            txt(f"Completed: {len(tester.results)} | Errors: {len(tester.errors)} | Failed ops: {len(tester.failed_operations)}",x,y,small); y+=15
+            if tester.errors:
+                latest=tester.errors[-1]
+                txt(f"ERROR {latest['error_id']}: {latest['reason']}",x,y,small,(255,120,120)); y+=15
+                txt(f"Required: {latest.get('required')} | Available: {latest.get('available')}",x,y,small,(255,180,140)); y+=15
         txt("STATUS: "+self.status,x,y,small,(255,202,125))
         for msg in self.messages[-3:]:
             y+=15; txt(msg,x,y,small,(151,190,213))

@@ -1,7 +1,6 @@
 """Readable progression-aware navigation with distinct vector symbols."""
 import math
 import pygame
-from graphics.asset_library import scaled_sprite
 from ui import theme
 
 

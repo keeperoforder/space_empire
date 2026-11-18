@@ -179,9 +179,17 @@ def run_launcher():
                 game=Game(load_saved=(selected=="continue"),
                           developer_mode=(selected=="developer"))
                 game.audio_manager=audio
-                game.run()
+                run_result=game.run()
                 settings=read_settings()
                 continue_available=has_continue_save()
+                if run_result == "main_menu":
+                    pygame.init()
+                    flags=pygame.RESIZABLE | (pygame.FULLSCREEN if settings["fullscreen"] else 0)
+                    screen=pygame.display.set_mode(tuple(settings["resolution"]),flags)
+                    state="menu"
+                    selected=None
+                    startup_error=""
+                    continue
             except Exception as exc:
                 traceback.print_exc()
                 startup_error=f"Помилка запуску: {type(exc).__name__}: {exc}"
