@@ -51,6 +51,16 @@ class AutomatedTesterReportTests(unittest.TestCase):
             self.assertEqual(data["missions"][0]["status"], "SKIPPED")
             self.assertEqual(data["completed_missions"], 0)
 
+    def test_outdated_crystal_extractor_mission_is_rejected(self):
+        with tempfile.TemporaryDirectory() as root:
+            tester = self.make_tester(root)
+            tester.game.campaign_manager.missions = {
+                "mine": {"id": "mine", "objective": {"type": "building", "key": "crystal_extractor", "amount": 1}},
+                "miner": {"id": "miner", "objective": {"type": "mined", "amount": 100}},
+            }
+            ok, message = tester._validate_campaign_contract()
+            self.assertFalse(ok)
+            self.assertIn("Outdated campaign data detected for mine", message)
     def test_test_id_is_separate_from_error_id(self):
         with tempfile.TemporaryDirectory() as root:
             tester = self.make_tester(root)

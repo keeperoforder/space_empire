@@ -34,6 +34,9 @@ class AutomatedCampaignTester:
         if self.game.progression.stage_index != 1 or self.game.progression.stage_id != "power":
             return False, "A clean campaign start is required."
         cm = self.game.campaign_manager
+        contract_ok, contract_message = self._validate_campaign_contract()
+        if not contract_ok:
+            return False, contract_message
         first = next((m for m in cm.missions.values() if m["status"] == "available"), None)
         if not first or first["id"] != cm.chapters[0]["missions"][0]:
             return False, "Campaign is not at its first mission."
@@ -52,6 +55,22 @@ class AutomatedCampaignTester:
         self.current_step = "Read first mission requirements"
         return True, "Automated campaign test started."
 
+    def _validate_campaign_contract(self):
+        """Reject obsolete campaign data that reintroduces the mining dependency cycle."""
+        expected = {"mine": ("mining_ship", 1), "miner": ("mined", 100)}
+        missions = self.game.campaign_manager.missions
+        for mission_id, (expected_type, minimum_amount) in expected.items():
+            mission = missions.get(mission_id)
+            if mission is None:
+                return False, f"Campaign data is missing mission {mission_id}. Update to the latest feature branch."
+            objective = mission.get("objective", {})
+            actual_type = objective.get("type")
+            actual_amount = objective.get("amount", minimum_amount)
+            if actual_type != expected_type or actual_amount < minimum_amount:
+                return False, (f"Outdated campaign data detected for {mission_id}: {actual_type}. "
+                               f"Expected {expected_type} with amount {minimum_amount}. "
+                               "Update to feature/settings-main-menu-and-autotester before running tests.")
+        return True, ""
     def pause(self):
         if self.state == "RUNNING":
             self.state = "PAUSED"
