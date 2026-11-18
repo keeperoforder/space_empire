@@ -107,11 +107,10 @@
     {
       "id": "mine",
       "chapter": "first_resources",
-      "title": "Інфраструктура видобутку",
-      "description": "Побудуйте видобувний комплекс.",
+      "title": "Підготувати видобувний корабель",
+      "description": "Побудуйте шахтарський корабель і підготуйте його до першого рейсу.",
       "objective": {
-        "type": "building",
-        "key": "crystal_extractor",
+        "type": "mining_ship",
         "amount": 1
       },
       "rewards": {

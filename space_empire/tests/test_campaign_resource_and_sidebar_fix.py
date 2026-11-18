@@ -21,16 +21,17 @@ class CampaignFuelAndSidebarFixTests(unittest.TestCase):
         self.assertGreaterEqual(available_before_station - mandatory_build_fuel, 0)
         self.assertEqual(mining_reward, 60)
 
+    def test_campaign_requires_mining_ship_before_mining_delivery(self):
+        campaign = json.loads((ROOT / "campaign/campaign.json").read_text(encoding="utf-8"))
+        missions = {mission["id"]: mission for mission in campaign["missions"]}
+        self.assertEqual(missions["mine"]["objective"], {"type": "mining_ship", "amount": 1})
+        self.assertEqual(missions["miner"]["objective"]["type"], "mined")
+        chapter = next(item for item in campaign["chapters"] if item["id"] == "first_resources")
+        self.assertEqual(chapter["missions"], ["mine", "miner"])
     def test_fuel_plant_is_not_required_before_station_stage(self):
         balance = json.loads((ROOT / "balance/progression_balance.json").read_text(encoding="utf-8"))
         self.assertNotIn("fuel_plant", balance["available_buildings_by_stage"]["station"])
         self.assertIn("fuel_plant", balance["available_buildings_by_stage"]["galaxy"])
-
-    def test_sprite_loader_is_imported_by_every_hud_component_that_uses_it(self):
-        for relative in ("ui/sidebar.py", "ui/top_bar.py", "ui/research_panel.py"):
-            source = (ROOT / relative).read_text(encoding="utf-8")
-            self.assertIn("from graphics.asset_library import scaled_sprite", source)
-            self.assertIn("scaled_sprite(", source)
 
     def test_sidebar_has_thirteen_distinct_semantic_vector_icons_and_larger_labels(self):
         source = (ROOT / "ui/sidebar.py").read_text(encoding="utf-8")
@@ -50,3 +51,16 @@ class CampaignFuelAndSidebarFixTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_sidebar_and_topbar_do_not_call_unimported_sprite_loader(self):
+        sidebar = (ROOT / "ui/sidebar.py").read_text(encoding="utf-8")
+        top_bar = (ROOT / "ui/top_bar.py").read_text(encoding="utf-8")
+        self.assertNotIn("scaled_sprite(", sidebar)
+        self.assertNotIn("scaled_sprite(", top_bar)
+        self.assertIn("self._draw_icon(surface, kind, icon_box.center, icon_color)", sidebar)
+        self.assertIn("theme.resource_glyph(surface, (x + 9, 38), resource.color, key, 10)", top_bar)
+
+    def test_hud_error_logger_keeps_traceback_output(self):
+        source = (ROOT / "ui/hud.py").read_text(encoding="utf-8")
+        self.assertIn("traceback.format_exc()", source)
+        self.assertIn("stream.write(", source)

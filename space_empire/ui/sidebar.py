@@ -1,7 +1,6 @@
 """Readable progression-aware navigation with distinct vector symbols."""
 import math
 import pygame
-from graphics.asset_library import scaled_sprite
 from ui import theme
 
 
@@ -196,14 +195,7 @@ class Sidebar:
                            "galaxy":"galaxy", "trade":"trade", "automation":"automation",
                            "campaign":"campaign", "progress":"progress", "defense":"defense",
                            "settings":"settings"}
-            try:
-                icon_sprite = scaled_sprite("icons", icon_assets[kind] + ".png", (28, 28))
-                if locked:
-                    icon_sprite = icon_sprite.copy()
-                    icon_sprite.set_alpha(155)
-                surface.blit(icon_sprite, icon_sprite.get_rect(center=icon_box.center))
-            except (KeyError, FileNotFoundError, pygame.error):
-                self._draw_icon(surface,kind,icon_box.center,icon_color)
+            self._draw_icon(surface, kind, icon_box.center, icon_color)
             theme.label(surface,name,(r.x+48,r.y+max(5,(r.height-17)//2)),
                         15,label_color,name == self.active or completed)
             if locked:

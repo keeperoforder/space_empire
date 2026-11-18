@@ -73,9 +73,9 @@ class HUD:
             log_path = Path(__file__).resolve().parent.parent / "saves" / "ui_errors.log"
             log_path.parent.mkdir(parents=True, exist_ok=True)
             with log_path.open("a", encoding="utf-8") as stream:
-                stream.write("\\n" + message + "\\n")
+                stream.write("\n" + message + "\n")
                 stream.write(traceback.format_exc())
-                stream.write("\\n")
+                stream.write("\n")
         except OSError:
             pass
 

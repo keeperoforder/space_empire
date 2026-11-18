@@ -1,6 +1,5 @@
 """Live resource strip with detailed per-resource hover information."""
 import pygame
-from graphics.asset_library import scaled_sprite
 from ui import theme
 
 
@@ -68,11 +67,7 @@ class TopBar:
             if i:
                 pygame.draw.line(surface, (31, 75, 103), (x - 12, 20), (x - 12, 61), 1)
 
-            try:
-                icon = scaled_sprite("icons", key + ".png", (30, 30))
-                surface.blit(icon, icon.get_rect(center=(x + 9, 38)))
-            except (FileNotFoundError, pygame.error):
-                theme.resource_glyph(surface, (x + 9, 38), resource.color, key, 10)
+            theme.resource_glyph(surface, (x + 9, 38), resource.color, key, 10)
             theme.label(surface, resource.name.upper(), (x + 26, 16), 8, theme.MUTED, True)
             theme.label(surface, self._format_amount(resource.amount), (x + 26, 28),
                         17, theme.TEXT, True)
