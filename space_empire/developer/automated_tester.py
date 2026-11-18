@@ -19,7 +19,9 @@ class AutomatedCampaignTester:
         self._last_progress = None
         self.results, self.errors, self.failed_operations = [], [], []
         self.started_at = self.finished_at = None
-        self._test_save_path = Path(game.save_manager.path)
+        save_manager = getattr(game, "save_manager", None)
+        self._test_save_path = (Path(save_manager.path) if save_manager is not None
+                                else Path(game.dev_save_dir) / "automated_test" / "test_save.json")
 
     def _now(self):
         return datetime.now().astimezone().isoformat()
