@@ -1,0 +1,128 @@
+{
+  "desert": {
+    "name": "Пустельна",
+    "color": [
+      207,
+      145,
+      79
+    ],
+    "atmosphere": [
+      226,
+      173,
+      105
+    ],
+    "resources": {
+      "metal": 1.25,
+      "energy": 0.8,
+      "crystals": 0.9,
+      "fuel": 0.7
+    },
+    "habitability": 0.65,
+    "population": 0.45
+  },
+  "ice": {
+    "name": "Крижана",
+    "color": [
+      128,
+      194,
+      224
+    ],
+    "atmosphere": [
+      170,
+      222,
+      245
+    ],
+    "resources": {
+      "metal": 0.8,
+      "energy": 0.75,
+      "crystals": 1.45,
+      "fuel": 0.8
+    },
+    "habitability": 0.4,
+    "population": 0.3
+  },
+  "forest": {
+    "name": "Лісова",
+    "color": [
+      76,
+      164,
+      105
+    ],
+    "atmosphere": [
+      117,
+      207,
+      151
+    ],
+    "resources": {
+      "metal": 0.85,
+      "energy": 1.0,
+      "crystals": 0.8,
+      "fuel": 1.25
+    },
+    "habitability": 0.95,
+    "population": 0.8
+  },
+  "volcanic": {
+    "name": "Вулканічна",
+    "color": [
+      196,
+      82,
+      57
+    ],
+    "atmosphere": [
+      238,
+      111,
+      70
+    ],
+    "resources": {
+      "metal": 1.5,
+      "energy": 1.35,
+      "crystals": 1.1,
+      "fuel": 0.65
+    },
+    "habitability": 0.25,
+    "population": 0.2
+  },
+  "gas_giant": {
+    "name": "Газовий гігант",
+    "color": [
+      184,
+      155,
+      117
+    ],
+    "atmosphere": [
+      224,
+      190,
+      143
+    ],
+    "resources": {
+      "metal": 0.25,
+      "energy": 1.6,
+      "crystals": 0.55,
+      "fuel": 1.5
+    },
+    "habitability": 0.0,
+    "population": 0.0
+  },
+  "terrestrial": {
+    "name": "Землеподібна",
+    "color": [
+      77,
+      139,
+      194
+    ],
+    "atmosphere": [
+      105,
+      191,
+      231
+    ],
+    "resources": {
+      "metal": 1.0,
+      "energy": 1.0,
+      "crystals": 1.0,
+      "fuel": 1.0
+    },
+    "habitability": 1.0,
+    "population": 1.0
+  }
+}

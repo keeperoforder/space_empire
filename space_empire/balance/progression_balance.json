@@ -1,0 +1,572 @@
+{
+  "version": 1,
+  "design_targets": {
+    "first_feedback_seconds": [
+      30,
+      120
+    ],
+    "first_solar_online_seconds": [
+      60,
+      180
+    ],
+    "first_mining_delivery_seconds": [
+      150,
+      360
+    ],
+    "first_research_complete_seconds": [
+      600,
+      1200
+    ],
+    "first_expedition_complete_seconds": [
+      900,
+      1800
+    ],
+    "opening_campaign_total_seconds": [
+      2400,
+      5400
+    ],
+    "notes": "Часові діапазони — орієнтир активного проходження без прискорення; фактичний час залежить від дій гравця та офлайн-прогресу."
+  },
+  "starting_state": {
+    "resources": {
+      "metal": 0,
+      "energy": 0,
+      "crystals": 0,
+      "fuel": 0,
+      "credits": 0,
+      "science": 0
+    },
+    "commander_level": 1,
+    "commander_xp": 0,
+    "additional_buildings": 0,
+    "mining_ships": 0,
+    "fleet_ships": 0,
+    "colonies": 0,
+    "discovered_systems": 1
+  },
+  "salvage_reward": {
+    "metal": 130,
+    "energy": 35,
+    "crystals": 12,
+    "fuel": 10,
+    "credits": 50,
+    "science": 0
+  },
+  "stage_rewards": {
+    "awakening": {
+      "xp": 25,
+      "resources": {}
+    },
+    "power": {
+      "xp": 50,
+      "resources": {
+        "metal": 150,
+        "energy": 35,
+        "crystals": 12,
+        "fuel": 55,
+        "credits": 100,
+        "science": 0
+      }
+    },
+    "mining": {
+      "xp": 75,
+      "resources": {
+        "metal": 250,
+        "energy": 90,
+        "crystals": 35,
+        "fuel": 60,
+        "credits": 180,
+        "science": 20
+      }
+    },
+    "station": {
+      "xp": 100,
+      "resources": {
+        "metal": 250,
+        "energy": 90,
+        "crystals": 45,
+        "fuel": 30,
+        "credits": 250,
+        "science": 65
+      }
+    },
+    "science": {
+      "xp": 125,
+      "resources": {
+        "metal": 500,
+        "energy": 130,
+        "crystals": 25,
+        "fuel": 80,
+        "credits": 430,
+        "science": 80
+      }
+    },
+    "fleet": {
+      "xp": 150,
+      "resources": {
+        "metal": 150,
+        "energy": 80,
+        "crystals": 30,
+        "fuel": 120,
+        "credits": 150,
+        "science": 25
+      }
+    },
+    "galaxy": {
+      "xp": 175,
+      "resources": {
+        "metal": 850,
+        "energy": 330,
+        "crystals": 100,
+        "fuel": 210,
+        "credits": 820,
+        "science": 80
+      }
+    },
+    "colonies": {
+      "xp": 200,
+      "resources": {
+        "metal": 560,
+        "energy": 180,
+        "crystals": 65,
+        "fuel": 80,
+        "credits": 650,
+        "science": 50
+      }
+    },
+    "automation": {
+      "xp": 225,
+      "resources": {
+        "metal": 220,
+        "energy": 90,
+        "crystals": 45,
+        "fuel": 80,
+        "credits": 250,
+        "science": 60
+      }
+    },
+    "empire": {
+      "xp": 300,
+      "resources": {
+        "metal": 180,
+        "energy": 80,
+        "crystals": 35,
+        "fuel": 70,
+        "credits": 250,
+        "science": 50
+      }
+    }
+  },
+  "production_rates": {
+    "solar_array": {
+      "energy": 8.0
+    },
+    "miner": {
+      "metal": 2.0,
+      "cargo_capacity": 120.0
+    },
+    "smelter": {
+      "metal": 2.4
+    },
+    "laboratory": {
+      "science": 1.6
+    }
+  },
+  "stage_estimates": {
+    "awakening": {
+      "seconds": [
+        30,
+        90
+      ],
+      "basis": "one-shot salvage interaction",
+      "income": "emergency cargo wreck"
+    },
+    "power": {
+      "seconds": [
+        60,
+        180
+      ],
+      "basis": "solar array construction 12s plus initial resource recovery",
+      "income": "salvage manifest and stage reward"
+    },
+    "mining": {
+      "seconds": [
+        150,
+        360
+      ],
+      "basis": "miner build, round-trip travel, extraction and delivery",
+      "income": "solar power + miner; first trip fuel reserved upfront"
+    },
+    "station": {
+      "seconds": [
+        180,
+        420
+      ],
+      "basis": "smelter 22s + warehouse 18s plus delivered metal",
+      "income": "asteroid delivery and mining milestone reward"
+    },
+    "science": {
+      "seconds": [
+        240,
+        600
+      ],
+      "basis": "laboratory 32s + science accumulation + research 18-30s",
+      "income": "laboratory at 1.6 science/s"
+    },
+    "fleet": {
+      "seconds": [
+        240,
+        540
+      ],
+      "basis": "hangar 30s + transport 24s + scout 22s",
+      "income": "milestone reward after research"
+    },
+    "galaxy": {
+      "seconds": [
+        180,
+        480
+      ],
+      "basis": "scout round trip and scan; route distance dependent",
+      "income": "stage fleet reserve + expedition reward"
+    },
+    "colonies": {
+      "seconds": [
+        300,
+        720
+      ],
+      "basis": "colonizer construction and colony mission",
+      "income": "galaxy discovery reward; one-time expedition resources"
+    },
+    "automation": {
+      "seconds": [
+        180,
+        480
+      ],
+      "basis": "AI-01 research already accessible after lab; enable one process",
+      "income": "laboratory science production + colony/mission reward"
+    },
+    "empire": {
+      "seconds": [
+        300,
+        900
+      ],
+      "basis": "second colony setup and trade route creation",
+      "income": "automation milestone reward + colony production"
+    }
+  },
+  "resource_bundles": {
+    "solar_array": {
+      "metal": 90,
+      "energy": 20,
+      "crystals": 8,
+      "fuel": 5,
+      "credits": 35
+    },
+    "miner": {
+      "metal": 140,
+      "energy": 35,
+      "crystals": 8,
+      "fuel": 25,
+      "credits": 90
+    },
+    "smelter_and_warehouse": {
+      "metal": 340,
+      "energy": 80,
+      "crystals": 23,
+      "fuel": 30,
+      "credits": 190,
+      "science": 5
+    },
+    "laboratory": {
+      "metal": 230,
+      "energy": 70,
+      "crystals": 35,
+      "fuel": 15,
+      "credits": 220,
+      "science": 15
+    },
+    "hangar_and_first_fleet": {
+      "metal": 575,
+      "energy": 165,
+      "crystals": 41,
+      "fuel": 100,
+      "credits": 460,
+      "science": 8
+    },
+    "colonizer_and_first_colony": {
+      "metal": 780,
+      "energy": 280,
+      "crystals": 90,
+      "fuel": 155,
+      "credits": 740
+    },
+    "second_colonizer_and_colony": {
+      "metal": 780,
+      "energy": 280,
+      "crystals": 90,
+      "fuel": 155,
+      "credits": 740
+    },
+    "colony_base": {
+      "metal": 180,
+      "energy": 80,
+      "crystals": 18,
+      "credits": 120
+    }
+  },
+  "resource_sources": {
+    "metal": [
+      "одноразовий аварійний вантаж",
+      "доставка шахтаря з астероїда",
+      "металургійний завод після будівництва"
+    ],
+    "energy": [
+      "одноразовий аварійний вантаж",
+      "сонячна панель: +8/с"
+    ],
+    "crystals": [
+      "одноразовий аварійний вантаж",
+      "винагороди експедицій",
+      "видобувні/планетарні системи після відкриття"
+    ],
+    "fuel": [
+      "одноразовий аварійний вантаж",
+      "винагороди етапів та експедицій",
+      "паливний завод або торгівля після відкриття"
+    ],
+    "credits": [
+      "одноразовий аварійний вантаж",
+      "винагороди етапів",
+      "житлові модулі та колонії після запуску"
+    ],
+    "science": [
+      "винагороди етапів",
+      "лабораторія: +1.6/с"
+    ]
+  },
+  "unlock_prerequisites": {
+    "building": [
+      "awakening.salvage_used"
+    ],
+    "mining": [
+      "power.solar_array_completed",
+      "mining.asteroid_available"
+    ],
+    "research": [
+      "station.laboratory_completed"
+    ],
+    "fleet": [
+      "station.hangar_completed"
+    ],
+    "galaxy": [
+      "fleet.scout_completed",
+      "fleet.transport_completed"
+    ],
+    "colonies": [
+      "galaxy.first_expedition_completed"
+    ],
+    "automation": [
+      "science.ai_01_completed"
+    ],
+    "trade": [
+      "colonies.two_colonies",
+      "fleet.transport_available"
+    ],
+    "defense": [
+      "campaign.first_danger_event"
+    ]
+  },
+  "available_buildings_by_stage": {
+    "awakening": [
+      "core"
+    ],
+    "power": [
+      "solar_array"
+    ],
+    "mining": [
+      "solar_array",
+      "smelter",
+      "warehouse"
+    ],
+    "station": [
+      "solar_array",
+      "smelter",
+      "warehouse"
+    ],
+    "science": [
+      "solar_array",
+      "smelter",
+      "warehouse",
+      "laboratory"
+    ],
+    "fleet": [
+      "solar_array",
+      "smelter",
+      "warehouse",
+      "laboratory",
+      "hangar"
+    ],
+    "galaxy": [
+      "solar_array",
+      "smelter",
+      "warehouse",
+      "laboratory",
+      "hangar",
+      "fuel_plant",
+      "crystal_extractor",
+      "habitat"
+    ],
+    "colonies": [
+      "solar_array",
+      "smelter",
+      "warehouse",
+      "laboratory",
+      "hangar",
+      "fuel_plant",
+      "crystal_extractor",
+      "habitat"
+    ],
+    "automation": [
+      "solar_array",
+      "smelter",
+      "warehouse",
+      "laboratory",
+      "hangar",
+      "fuel_plant",
+      "crystal_extractor",
+      "habitat"
+    ],
+    "empire": [
+      "solar_array",
+      "smelter",
+      "warehouse",
+      "laboratory",
+      "hangar",
+      "fuel_plant",
+      "crystal_extractor",
+      "habitat",
+      "defense"
+    ]
+  },
+  "dependency_edges": [
+    [
+      "awakening",
+      "power"
+    ],
+    [
+      "power",
+      "mining"
+    ],
+    [
+      "mining",
+      "station"
+    ],
+    [
+      "station",
+      "science"
+    ],
+    [
+      "science",
+      "fleet"
+    ],
+    [
+      "fleet",
+      "galaxy"
+    ],
+    [
+      "galaxy",
+      "colonies"
+    ],
+    [
+      "colonies",
+      "automation"
+    ],
+    [
+      "automation",
+      "empire"
+    ],
+    [
+      "power",
+      "solar_array"
+    ],
+    [
+      "mining",
+      "miner_delivery"
+    ],
+    [
+      "mining",
+      "smelter_and_warehouse"
+    ],
+    [
+      "station",
+      "laboratory"
+    ],
+    [
+      "science",
+      "AI_01"
+    ],
+    [
+      "science",
+      "hangar_and_ships"
+    ],
+    [
+      "fleet",
+      "first_expedition"
+    ],
+    [
+      "galaxy",
+      "first_colony"
+    ],
+    [
+      "colonies",
+      "second_colony"
+    ],
+    [
+      "automation",
+      "trade_route"
+    ],
+    [
+      "second_colony",
+      "trade_route"
+    ],
+    [
+      "transport_ship",
+      "trade_route"
+    ]
+  ],
+  "critical_reserves": {
+    "miner_round_trip_fuel": 26.3,
+    "first_research_science": 65,
+    "first_expedition_fuel": 20
+  },
+  "expedition": {
+    "base_scan_seconds": 45.0,
+    "distance_scan_factor": 0.025,
+    "rewards": {
+      "metal": [
+        70,
+        150
+      ],
+      "crystals": [
+        8,
+        24
+      ],
+      "fuel": [
+        15,
+        40
+      ],
+      "credits": [
+        80,
+        180
+      ],
+      "science": [
+        12,
+        35
+      ]
+    }
+  },
+  "commander_xp_thresholds": {
+    "first_level": 100,
+    "per_level_increment": 75
+  }
+}

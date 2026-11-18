@@ -1,0 +1,8 @@
+"""Space Empire application entry point."""
+from launcher import run_launcher
+
+def main() -> None:
+    raise SystemExit(run_launcher())
+
+if __name__ == "__main__":
+    main()

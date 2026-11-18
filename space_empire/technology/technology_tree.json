@@ -1,0 +1,576 @@
+{
+  "version": 1,
+  "branches": [
+    {
+      "id": "energy",
+      "name": "Енергетика",
+      "icon": "ϟ",
+      "color": [
+        235,
+        185,
+        75
+      ]
+    },
+    {
+      "id": "mining",
+      "name": "Видобуток",
+      "icon": "⛏",
+      "color": [
+        190,
+        170,
+        115
+      ]
+    },
+    {
+      "id": "engineering",
+      "name": "Інженерія",
+      "icon": "⚙",
+      "color": [
+        95,
+        195,
+        220
+      ]
+    },
+    {
+      "id": "spaceflight",
+      "name": "Космонавтика",
+      "icon": "✦",
+      "color": [
+        105,
+        165,
+        245
+      ]
+    },
+    {
+      "id": "colonization",
+      "name": "Колонізація",
+      "icon": "◉",
+      "color": [
+        115,
+        215,
+        160
+      ]
+    },
+    {
+      "id": "military",
+      "name": "Військові технології",
+      "icon": "✚",
+      "color": [
+        235,
+        115,
+        125
+      ]
+    },
+    {
+      "id": "ai",
+      "name": "Штучний інтелект",
+      "icon": "⌘",
+      "color": [
+        190,
+        145,
+        245
+      ]
+    }
+  ],
+  "technologies": [
+    {
+      "id": "energy_01",
+      "branch_id": "energy",
+      "branch": "Енергетика",
+      "name": "Ефективні турбіни",
+      "description": "Підвищує виробництво енергії сонячними та енергетичними установками.",
+      "icon": "ϟ",
+      "branch_color": [
+        235,
+        185,
+        75
+      ],
+      "science_cost": 65,
+      "research_time": 18,
+      "prerequisites": [],
+      "bonuses": {
+        "energy_production_multiplier": 1.12
+      },
+      "state": "locked",
+      "x": 170,
+      "y": 150
+    },
+    {
+      "id": "energy_02",
+      "branch_id": "energy",
+      "branch": "Енергетика",
+      "name": "Надпровідні мережі",
+      "description": "Зменшує втрати під час передавання енергії та збільшує місткість енергосистеми.",
+      "icon": "ϟ",
+      "branch_color": [
+        235,
+        185,
+        75
+      ],
+      "science_cost": 120,
+      "research_time": 28,
+      "prerequisites": [
+        "energy_01"
+      ],
+      "bonuses": {
+        "energy_capacity_multiplier": 1.2,
+        "energy_consumption_multiplier": 0.94
+      },
+      "state": "locked",
+      "x": 170,
+      "y": 325
+    },
+    {
+      "id": "energy_03",
+      "branch_id": "energy",
+      "branch": "Енергетика",
+      "name": "Квантовий реактор",
+      "description": "Новий реакторний цикл забезпечує значний приріст енергетичного балансу.",
+      "icon": "ϟ",
+      "branch_color": [
+        235,
+        185,
+        75
+      ],
+      "science_cost": 220,
+      "research_time": 42,
+      "prerequisites": [
+        "energy_02"
+      ],
+      "bonuses": {
+        "energy_production_multiplier": 1.22,
+        "energy_capacity_multiplier": 1.15
+      },
+      "state": "locked",
+      "x": 170,
+      "y": 500
+    },
+    {
+      "id": "mining_01",
+      "branch_id": "mining",
+      "branch": "Видобуток",
+      "name": "Автономні бурові системи",
+      "description": "Оптимізує інструменти та алгоритми видобутку астероїдної руди.",
+      "icon": "⛏",
+      "branch_color": [
+        190,
+        170,
+        115
+      ],
+      "science_cost": 70,
+      "research_time": 20,
+      "prerequisites": [],
+      "bonuses": {
+        "mining_rate_multiplier": 1.2
+      },
+      "state": "locked",
+      "x": 420,
+      "y": 150
+    },
+    {
+      "id": "mining_02",
+      "branch_id": "mining",
+      "branch": "Видобуток",
+      "name": "Глибинне сканування",
+      "description": "Підвищує точність пошуку багатих покладів і ефективність роботи шахтарів.",
+      "icon": "⛏",
+      "branch_color": [
+        190,
+        170,
+        115
+      ],
+      "science_cost": 135,
+      "research_time": 30,
+      "prerequisites": [
+        "mining_01"
+      ],
+      "bonuses": {
+        "mining_rate_multiplier": 1.18,
+        "mining_fuel_multiplier": 0.92
+      },
+      "state": "locked",
+      "x": 420,
+      "y": 325
+    },
+    {
+      "id": "mining_03",
+      "branch_id": "mining",
+      "branch": "Видобуток",
+      "name": "Нанорудозбагачення",
+      "description": "Автоматизоване очищення руди збільшує корисний вихід металу.",
+      "icon": "⛏",
+      "branch_color": [
+        190,
+        170,
+        115
+      ],
+      "science_cost": 240,
+      "research_time": 45,
+      "prerequisites": [
+        "mining_02"
+      ],
+      "bonuses": {
+        "mining_rate_multiplier": 1.3
+      },
+      "state": "locked",
+      "x": 420,
+      "y": 500
+    },
+    {
+      "id": "engineering_01",
+      "branch_id": "engineering",
+      "branch": "Інженерія",
+      "name": "Модульне виробництво",
+      "description": "Стандартизує вузли станції та скорочує час будівельних робіт.",
+      "icon": "⚙",
+      "branch_color": [
+        95,
+        195,
+        220
+      ],
+      "science_cost": 75,
+      "research_time": 22,
+      "prerequisites": [],
+      "bonuses": {
+        "construction_time_multiplier": 0.88
+      },
+      "state": "locked",
+      "x": 670,
+      "y": 150
+    },
+    {
+      "id": "engineering_02",
+      "branch_id": "engineering",
+      "branch": "Інженерія",
+      "name": "Композитні матеріали",
+      "description": "Знижує витрати металу на споруди та підвищує місткість складів.",
+      "icon": "⚙",
+      "branch_color": [
+        95,
+        195,
+        220
+      ],
+      "science_cost": 145,
+      "research_time": 32,
+      "prerequisites": [
+        "engineering_01"
+      ],
+      "bonuses": {
+        "building_cost_multiplier": 0.9,
+        "storage_capacity_multiplier": 1.15
+      },
+      "state": "locked",
+      "x": 670,
+      "y": 325
+    },
+    {
+      "id": "engineering_03",
+      "branch_id": "engineering",
+      "branch": "Інженерія",
+      "name": "Самовідновні конструкції",
+      "description": "Нові матеріали підвищують міцність корпусів і надійність станції.",
+      "icon": "⚙",
+      "branch_color": [
+        95,
+        195,
+        220
+      ],
+      "science_cost": 250,
+      "research_time": 46,
+      "prerequisites": [
+        "engineering_02"
+      ],
+      "bonuses": {
+        "ship_hull_multiplier": 1.18,
+        "maintenance_multiplier": 0.9
+      },
+      "state": "locked",
+      "x": 670,
+      "y": 500
+    },
+    {
+      "id": "spaceflight_01",
+      "branch_id": "spaceflight",
+      "branch": "Космонавтика",
+      "name": "Іонні двигуни",
+      "description": "Підвищує швидкість кораблів завдяки ефективнішим двигунам.",
+      "icon": "✦",
+      "branch_color": [
+        105,
+        165,
+        245
+      ],
+      "science_cost": 80,
+      "research_time": 24,
+      "prerequisites": [],
+      "bonuses": {
+        "ship_speed_multiplier": 1.15
+      },
+      "state": "locked",
+      "x": 920,
+      "y": 150
+    },
+    {
+      "id": "spaceflight_02",
+      "branch_id": "spaceflight",
+      "branch": "Космонавтика",
+      "name": "Навігаційні обчислювачі",
+      "description": "Оптимізує маршрути та зменшує витрати палива під час польотів.",
+      "icon": "✦",
+      "branch_color": [
+        105,
+        165,
+        245
+      ],
+      "science_cost": 155,
+      "research_time": 34,
+      "prerequisites": [
+        "spaceflight_01"
+      ],
+      "bonuses": {
+        "ship_fuel_multiplier": 0.88
+      },
+      "state": "locked",
+      "x": 920,
+      "y": 325
+    },
+    {
+      "id": "spaceflight_03",
+      "branch_id": "spaceflight",
+      "branch": "Космонавтика",
+      "name": "Гіперімпульсний привод",
+      "description": "Відкриває високоефективні двигуни для всіх класів флоту.",
+      "icon": "✦",
+      "branch_color": [
+        105,
+        165,
+        245
+      ],
+      "science_cost": 270,
+      "research_time": 48,
+      "prerequisites": [
+        "spaceflight_02"
+      ],
+      "bonuses": {
+        "ship_speed_multiplier": 1.2,
+        "ship_fuel_multiplier": 0.9
+      },
+      "state": "locked",
+      "x": 920,
+      "y": 500
+    },
+    {
+      "id": "colonization_01",
+      "branch_id": "colonization",
+      "branch": "Колонізація",
+      "name": "Автономні житлові модулі",
+      "description": "Підвищує ефективність житлових систем та підготовку колоній.",
+      "icon": "◉",
+      "branch_color": [
+        115,
+        215,
+        160
+      ],
+      "science_cost": 90,
+      "research_time": 26,
+      "prerequisites": [],
+      "bonuses": {
+        "habitation_bonus_multiplier": 1.2
+      },
+      "state": "locked",
+      "x": 1170,
+      "y": 150
+    },
+    {
+      "id": "colonization_02",
+      "branch_id": "colonization",
+      "branch": "Колонізація",
+      "name": "Планетарна логістика",
+      "description": "Збільшує вантажні можливості кораблів постачання та колонізації.",
+      "icon": "◉",
+      "branch_color": [
+        115,
+        215,
+        160
+      ],
+      "science_cost": 170,
+      "research_time": 36,
+      "prerequisites": [
+        "colonization_01"
+      ],
+      "bonuses": {
+        "ship_cargo_multiplier": 1.25
+      },
+      "state": "locked",
+      "x": 1170,
+      "y": 325
+    },
+    {
+      "id": "colonization_03",
+      "branch_id": "colonization",
+      "branch": "Колонізація",
+      "name": "Тераформувальні комплекси",
+      "description": "Покращує колонізаційне обладнання та ефективність інфраструктури.",
+      "icon": "◉",
+      "branch_color": [
+        115,
+        215,
+        160
+      ],
+      "science_cost": 290,
+      "research_time": 52,
+      "prerequisites": [
+        "colonization_02"
+      ],
+      "bonuses": {
+        "colonization_bonus_multiplier": 1.3,
+        "ship_cargo_multiplier": 1.1
+      },
+      "state": "locked",
+      "x": 1170,
+      "y": 500
+    },
+    {
+      "id": "military_01",
+      "branch_id": "military",
+      "branch": "Військові технології",
+      "name": "Посилене бронювання",
+      "description": "Підвищує живучість корабельних корпусів.",
+      "icon": "✚",
+      "branch_color": [
+        235,
+        115,
+        125
+      ],
+      "science_cost": 100,
+      "research_time": 28,
+      "prerequisites": [],
+      "bonuses": {
+        "ship_hull_multiplier": 1.2
+      },
+      "state": "locked",
+      "x": 1420,
+      "y": 150
+    },
+    {
+      "id": "military_02",
+      "branch_id": "military",
+      "branch": "Військові технології",
+      "name": "Тактичні сенсори",
+      "description": "Покращує сенсори та координацію ескортних груп. Бойова система не активується.",
+      "icon": "✚",
+      "branch_color": [
+        235,
+        115,
+        125
+      ],
+      "science_cost": 185,
+      "research_time": 40,
+      "prerequisites": [
+        "military_01"
+      ],
+      "bonuses": {
+        "fleet_mission_speed_multiplier": 1.1
+      },
+      "state": "locked",
+      "x": 1420,
+      "y": 325
+    },
+    {
+      "id": "military_03",
+      "branch_id": "military",
+      "branch": "Військові технології",
+      "name": "Плазмові системи",
+      "description": "Дослідження закладає основу для майбутнього озброєння та бойових модулів.",
+      "icon": "✚",
+      "branch_color": [
+        235,
+        115,
+        125
+      ],
+      "science_cost": 310,
+      "research_time": 55,
+      "prerequisites": [
+        "military_02"
+      ],
+      "bonuses": {
+        "combat_readiness": 1.0
+      },
+      "state": "locked",
+      "x": 1420,
+      "y": 500
+    },
+    {
+      "id": "ai_01",
+      "branch_id": "ai",
+      "branch": "Штучний інтелект",
+      "name": "Експертні системи",
+      "description": "Автоматизує керування виробничими процесами та дослідницькими чергами.",
+      "icon": "⌘",
+      "branch_color": [
+        190,
+        145,
+        245
+      ],
+      "science_cost": 110,
+      "research_time": 30,
+      "prerequisites": [],
+      "bonuses": {
+        "research_speed_multiplier": 1.15
+      },
+      "state": "locked",
+      "x": 1670,
+      "y": 150
+    },
+    {
+      "id": "ai_02",
+      "branch_id": "ai",
+      "branch": "Штучний інтелект",
+      "name": "Нейромережеве керування",
+      "description": "Оптимізує технічне обслуговування та роботу корабельних систем.",
+      "icon": "⌘",
+      "branch_color": [
+        190,
+        145,
+        245
+      ],
+      "science_cost": 205,
+      "research_time": 42,
+      "prerequisites": [
+        "ai_01"
+      ],
+      "bonuses": {
+        "maintenance_multiplier": 0.82,
+        "ship_speed_multiplier": 1.05
+      },
+      "state": "locked",
+      "x": 1670,
+      "y": 325
+    },
+    {
+      "id": "ai_03",
+      "branch_id": "ai",
+      "branch": "Штучний інтелект",
+      "name": "Самонавчальна мережа",
+      "description": "Об'єднує керування станцією, флотом і дослідницькими комплексами.",
+      "icon": "⌘",
+      "branch_color": [
+        190,
+        145,
+        245
+      ],
+      "science_cost": 340,
+      "research_time": 60,
+      "prerequisites": [
+        "ai_02"
+      ],
+      "bonuses": {
+        "research_speed_multiplier": 1.2,
+        "energy_consumption_multiplier": 0.92
+      },
+      "state": "locked",
+      "x": 1670,
+      "y": 500
+    }
+  ]
+}

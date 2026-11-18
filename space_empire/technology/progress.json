@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "technologies": {
+    "energy_01": "locked",
+    "energy_02": "locked",
+    "energy_03": "locked",
+    "mining_01": "locked",
+    "mining_02": "locked",
+    "mining_03": "locked",
+    "engineering_01": "locked",
+    "engineering_02": "locked",
+    "engineering_03": "locked",
+    "spaceflight_01": "locked",
+    "spaceflight_02": "locked",
+    "spaceflight_03": "locked",
+    "colonization_01": "locked",
+    "colonization_02": "locked",
+    "colonization_03": "locked",
+    "military_01": "locked",
+    "military_02": "locked",
+    "military_03": "locked",
+    "ai_01": "locked",
+    "ai_02": "locked",
+    "ai_03": "locked"
+  },
+  "active_research": null,
+  "elapsed": 0.0
+}

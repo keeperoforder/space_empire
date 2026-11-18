@@ -1,0 +1,227 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "id": "awakening",
+      "label": "Пробудження",
+      "kind": "quest"
+    },
+    {
+      "id": "salvage",
+      "label": "Аварійний вантаж",
+      "kind": "resource"
+    },
+    {
+      "id": "power",
+      "label": "Відновлення живлення",
+      "kind": "quest"
+    },
+    {
+      "id": "solar_array",
+      "label": "Сонячна панель",
+      "kind": "building"
+    },
+    {
+      "id": "mining",
+      "label": "Перший видобуток",
+      "kind": "quest"
+    },
+    {
+      "id": "miner",
+      "label": "Шахтарський корабель",
+      "kind": "ship"
+    },
+    {
+      "id": "miner_delivery",
+      "label": "Перша доставка металу",
+      "kind": "resource"
+    },
+    {
+      "id": "station",
+      "label": "Розвиток станції",
+      "kind": "quest"
+    },
+    {
+      "id": "smelter_warehouse",
+      "label": "Завод + склад",
+      "kind": "building"
+    },
+    {
+      "id": "science",
+      "label": "Наукові дослідження",
+      "kind": "quest"
+    },
+    {
+      "id": "laboratory",
+      "label": "Лабораторія",
+      "kind": "building"
+    },
+    {
+      "id": "first_tech",
+      "label": "Перша технологія",
+      "kind": "technology"
+    },
+    {
+      "id": "fleet",
+      "label": "Перший флот",
+      "kind": "quest"
+    },
+    {
+      "id": "hangar",
+      "label": "Ангар",
+      "kind": "building"
+    },
+    {
+      "id": "transport_scout",
+      "label": "Транспорт + розвідник",
+      "kind": "ship"
+    },
+    {
+      "id": "galaxy",
+      "label": "Галактична карта",
+      "kind": "quest"
+    },
+    {
+      "id": "expedition",
+      "label": "Перша експедиція",
+      "kind": "mission"
+    },
+    {
+      "id": "colonies",
+      "label": "Колонізація",
+      "kind": "quest"
+    },
+    {
+      "id": "first_colony",
+      "label": "Перша колонія",
+      "kind": "mission"
+    },
+    {
+      "id": "automation",
+      "label": "Автоматизація + друга колонія",
+      "kind": "quest"
+    },
+    {
+      "id": "ai_01",
+      "label": "Експертні системи",
+      "kind": "technology"
+    },
+    {
+      "id": "second_colony",
+      "label": "Друга колонія",
+      "kind": "mission"
+    },
+    {
+      "id": "empire",
+      "label": "Торгівля та розширення",
+      "kind": "quest"
+    },
+    {
+      "id": "trade_route",
+      "label": "Торговельний маршрут",
+      "kind": "system"
+    }
+  ],
+  "edges": [
+    [
+      "awakening",
+      "salvage"
+    ],
+    [
+      "salvage",
+      "power"
+    ],
+    [
+      "power",
+      "solar_array"
+    ],
+    [
+      "solar_array",
+      "mining"
+    ],
+    [
+      "mining",
+      "miner"
+    ],
+    [
+      "miner",
+      "miner_delivery"
+    ],
+    [
+      "miner_delivery",
+      "station"
+    ],
+    [
+      "station",
+      "smelter_warehouse"
+    ],
+    [
+      "smelter_warehouse",
+      "science"
+    ],
+    [
+      "science",
+      "laboratory"
+    ],
+    [
+      "laboratory",
+      "first_tech"
+    ],
+    [
+      "first_tech",
+      "fleet"
+    ],
+    [
+      "fleet",
+      "hangar"
+    ],
+    [
+      "hangar",
+      "transport_scout"
+    ],
+    [
+      "transport_scout",
+      "galaxy"
+    ],
+    [
+      "galaxy",
+      "expedition"
+    ],
+    [
+      "expedition",
+      "colonies"
+    ],
+    [
+      "colonies",
+      "first_colony"
+    ],
+    [
+      "first_colony",
+      "automation"
+    ],
+    [
+      "laboratory",
+      "ai_01"
+    ],
+    [
+      "ai_01",
+      "automation"
+    ],
+    [
+      "automation",
+      "second_colony"
+    ],
+    [
+      "second_colony",
+      "empire"
+    ],
+    [
+      "transport_scout",
+      "trade_route"
+    ],
+    [
+      "empire",
+      "trade_route"
+    ]
+  ]
+}

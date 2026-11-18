@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "mining_ship": {
+    "metal": 140,
+    "energy": 35,
+    "crystals": 8,
+    "fuel": 25,
+    "credits": 90,
+    "science": 0
+  },
+  "mining_upgrades": {
+    "speed": {
+      "metal": 90,
+      "energy": 25,
+      "crystals": 4,
+      "fuel": 8,
+      "credits": 45,
+      "science": 0
+    },
+    "capacity": {
+      "metal": 110,
+      "energy": 20,
+      "crystals": 6,
+      "fuel": 8,
+      "credits": 55,
+      "science": 0
+    },
+    "mining": {
+      "metal": 120,
+      "energy": 30,
+      "crystals": 10,
+      "fuel": 10,
+      "credits": 70,
+      "science": 5
+    }
+  },
+  "ships": {
+    "miner": {
+      "metal": 140,
+      "energy": 35,
+      "crystals": 8,
+      "fuel": 25,
+      "credits": 90
+    },
+    "transport": {
+      "metal": 190,
+      "energy": 45,
+      "crystals": 5,
+      "fuel": 35,
+      "credits": 130
+    },
+    "scout": {
+      "metal": 125,
+      "energy": 55,
+      "crystals": 18,
+      "fuel": 30,
+      "credits": 150
+    },
+    "colonizer": {
+      "metal": 520,
+      "energy": 160,
+      "crystals": 55,
+      "fuel": 100,
+      "credits": 500
+    }
+  },
+  "colonization": {
+    "metal": 260,
+    "energy": 120,
+    "crystals": 35,
+    "fuel": 55,
+    "credits": 240
+  },
+  "colony_base": {
+    "metal": 180,
+    "energy": 80,
+    "crystals": 18,
+    "credits": 120
+  },
+  "ship_tuning": {
+    "miner": {
+      "build_time": 18,
+      "fuel_rate": 0.012
+    },
+    "transport": {
+      "build_time": 24,
+      "fuel_rate": 0.014
+    },
+    "scout": {
+      "build_time": 22,
+      "fuel_rate": 0.009
+    },
+    "colonizer": {
+      "build_time": 60,
+      "fuel_rate": 0.026
+    }
+  },
+  "mining_ship_tuning": {
+    "speed": 155.0,
+    "cargo_capacity": 120.0,
+    "mining_rate": 2.0,
+    "fuel_per_unit": 0.018
+  }
+}

@@ -1,0 +1,1 @@
+from campaign.campaign_manager import CampaignManager

@@ -1,0 +1,223 @@
+{
+  "core": {
+    "id": "core",
+    "name": "Центральне ядро",
+    "description": "Командний і навігаційний центр станції. Базова споруда, вже встановлена на Atlas-01.",
+    "buildable": false,
+    "build_time": 0,
+    "max_level": 1,
+    "cost": {
+      "metal": 0,
+      "energy": 0,
+      "crystals": 0,
+      "fuel": 0,
+      "credits": 0,
+      "science": 0
+    },
+    "production": {},
+    "energy_consumption": 0,
+    "capacity_bonus": {},
+    "sprite": "core"
+  },
+  "solar_array": {
+    "id": "solar_array",
+    "name": "Сонячна панель",
+    "description": "Перетворює зоряне випромінювання на електроенергію. Забезпечує енергетичний резерв станції.",
+    "buildable": true,
+    "build_time": 12,
+    "max_level": 10,
+    "cost": {
+      "metal": 90,
+      "energy": 20,
+      "crystals": 8,
+      "fuel": 5,
+      "credits": 35,
+      "science": 0
+    },
+    "production": {
+      "energy": 8.0
+    },
+    "energy_consumption": 0,
+    "capacity_bonus": {},
+    "sprite": "solar"
+  },
+  "smelter": {
+    "id": "smelter",
+    "name": "Металургійний завод",
+    "description": "Переробляє астероїдну руду на конструкційний метал. Потребує стабільного живлення.",
+    "buildable": true,
+    "build_time": 22,
+    "max_level": 10,
+    "cost": {
+      "metal": 180,
+      "energy": 45,
+      "crystals": 15,
+      "fuel": 20,
+      "credits": 100,
+      "science": 5
+    },
+    "production": {
+      "metal": 2.4
+    },
+    "energy_consumption": 1.6,
+    "capacity_bonus": {},
+    "sprite": "smelter"
+  },
+  "crystal_extractor": {
+    "id": "crystal_extractor",
+    "name": "Кристалічний екстрактор",
+    "description": "Видобуває та очищує рідкісні енергокристали з космічного пилу й уламків.",
+    "buildable": true,
+    "build_time": 26,
+    "max_level": 10,
+    "cost": {
+      "metal": 210,
+      "energy": 55,
+      "crystals": 25,
+      "fuel": 25,
+      "credits": 130,
+      "science": 10
+    },
+    "production": {
+      "crystals": 1.15
+    },
+    "energy_consumption": 2.0,
+    "capacity_bonus": {},
+    "sprite": "crystal"
+  },
+  "fuel_plant": {
+    "id": "fuel_plant",
+    "name": "Паливний завод",
+    "description": "Синтезує ракетне паливо з газових сумішей, зібраних у секторі.",
+    "buildable": true,
+    "build_time": 24,
+    "max_level": 10,
+    "cost": {
+      "metal": 190,
+      "energy": 50,
+      "crystals": 10,
+      "fuel": 15,
+      "credits": 120,
+      "science": 5
+    },
+    "production": {
+      "fuel": 1.8
+    },
+    "energy_consumption": 1.8,
+    "capacity_bonus": {},
+    "sprite": "fuel"
+  },
+  "hangar": {
+    "id": "hangar",
+    "name": "Ангар",
+    "description": "Сервісний док для зберігання, ремонту та підготовки малих космічних кораблів.",
+    "buildable": true,
+    "build_time": 30,
+    "max_level": 10,
+    "cost": {
+      "metal": 260,
+      "energy": 65,
+      "crystals": 18,
+      "fuel": 35,
+      "credits": 180,
+      "science": 8
+    },
+    "production": {},
+    "energy_consumption": 1.0,
+    "capacity_bonus": {
+      "fuel": 100
+    },
+    "sprite": "hangar"
+  },
+  "laboratory": {
+    "id": "laboratory",
+    "name": "Наукова лабораторія",
+    "description": "Досліджує технології станції та генерує наукові дані для майбутніх покращень.",
+    "buildable": true,
+    "build_time": 32,
+    "max_level": 10,
+    "cost": {
+      "metal": 230,
+      "energy": 70,
+      "crystals": 35,
+      "fuel": 15,
+      "credits": 220,
+      "science": 15
+    },
+    "production": {
+      "science": 1.6
+    },
+    "energy_consumption": 2.2,
+    "capacity_bonus": {},
+    "sprite": "lab"
+  },
+  "warehouse": {
+    "id": "warehouse",
+    "name": "Склад",
+    "description": "Розширює місткість сховищ для металу, енергії, кристалів, палива та кредитів.",
+    "buildable": true,
+    "build_time": 18,
+    "max_level": 10,
+    "cost": {
+      "metal": 160,
+      "energy": 35,
+      "crystals": 8,
+      "fuel": 10,
+      "credits": 90,
+      "science": 0
+    },
+    "production": {},
+    "energy_consumption": 0.35,
+    "capacity_bonus": {
+      "metal": 900,
+      "energy": 350,
+      "crystals": 300,
+      "fuel": 450,
+      "credits": 1200,
+      "science": 150
+    },
+    "sprite": "warehouse"
+  },
+  "habitat": {
+    "id": "habitat",
+    "name": "Житловий модуль",
+    "description": "Забезпечує екіпаж житловими секціями та підтримує економіку станції.",
+    "buildable": true,
+    "build_time": 28,
+    "max_level": 10,
+    "cost": {
+      "metal": 200,
+      "energy": 45,
+      "crystals": 12,
+      "fuel": 18,
+      "credits": 140,
+      "science": 4
+    },
+    "production": {
+      "credits": 0.75
+    },
+    "energy_consumption": 0.9,
+    "capacity_bonus": {},
+    "sprite": "habitat"
+  },
+  "defense": {
+    "id": "defense",
+    "name": "Захисний модуль",
+    "description": "Сенсори, бронепанелі та автоматизовані турелі для захисту станції.",
+    "buildable": true,
+    "build_time": 27,
+    "max_level": 10,
+    "cost": {
+      "metal": 250,
+      "energy": 60,
+      "crystals": 20,
+      "fuel": 22,
+      "credits": 170,
+      "science": 8
+    },
+    "production": {},
+    "energy_consumption": 1.35,
+    "capacity_bonus": {},
+    "sprite": "defense"
+  }
+}

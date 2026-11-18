@@ -1,0 +1,884 @@
+{
+  "systems": [
+    {
+      "id": "sol",
+      "name": "Сол",
+      "x": 0,
+      "y": 0,
+      "star_color": "home",
+      "neighbors": [
+        "vega",
+        "sirius",
+        "proxima"
+      ],
+      "home": true,
+      "objects": [
+        {
+          "id": "sol-obj-1",
+          "name": "Сол I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": true
+        },
+        {
+          "id": "sol-obj-2",
+          "name": "Аномалія Сол",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": true
+        },
+        {
+          "id": "sol-obj-3",
+          "name": "Сол III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": true
+        }
+      ],
+      "discovered": true,
+      "accessible": true
+    },
+    {
+      "id": "vega",
+      "name": "Вега",
+      "x": 330,
+      "y": -150,
+      "star_color": "yellow",
+      "neighbors": [
+        "sol",
+        "altair",
+        "capella"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "vega-obj-1",
+          "name": "Станція «Вега»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "vega-obj-2",
+          "name": "Поле Вега",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "vega-obj-3",
+          "name": "Вега III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "vega-obj-4",
+          "name": "Вега IV",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "sirius",
+      "name": "Сіріус",
+      "x": -310,
+      "y": -190,
+      "star_color": "blue",
+      "neighbors": [
+        "sol",
+        "rigel",
+        "antares"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "sirius-obj-1",
+          "name": "Поле Сіріус",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "sirius-obj-2",
+          "name": "Сіріус II",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "sirius-obj-3",
+          "name": "Аномалія Сіріус",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "sirius-obj-4",
+          "name": "Аномалія Сіріус",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "sirius-obj-5",
+          "name": "Станція «Сіріус»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "proxima",
+      "name": "Проксима",
+      "x": 210,
+      "y": 260,
+      "star_color": "red",
+      "neighbors": [
+        "sol",
+        "arcturus",
+        "regulus"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "proxima-obj-1",
+          "name": "Станція «Проксима»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "proxima-obj-2",
+          "name": "Станція «Проксима»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "proxima-obj-3",
+          "name": "Проксима III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "proxima-obj-4",
+          "name": "Проксима IV",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "altair",
+      "name": "Альтаїр",
+      "x": 650,
+      "y": 80,
+      "star_color": "white",
+      "neighbors": [
+        "vega",
+        "arcturus",
+        "aldebaran"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "altair-obj-1",
+          "name": "Поле Альтаїр",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "altair-obj-2",
+          "name": "Поле Альтаїр",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "altair-obj-3",
+          "name": "Альтаїр III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "altair-obj-4",
+          "name": "Поле Альтаїр",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "rigel",
+      "name": "Рігель",
+      "x": -650,
+      "y": -80,
+      "star_color": "blue",
+      "neighbors": [
+        "sirius",
+        "deneb",
+        "betelgeuse"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "rigel-obj-1",
+          "name": "Рігель I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "rigel-obj-2",
+          "name": "Поле Рігель",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "rigel-obj-3",
+          "name": "Аномалія Рігель",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "deneb",
+      "name": "Денеб",
+      "x": -80,
+      "y": -510,
+      "star_color": "white",
+      "neighbors": [
+        "rigel",
+        "polaris",
+        "castor"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "deneb-obj-1",
+          "name": "Станція «Денеб»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "deneb-obj-2",
+          "name": "Поле Денеб",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "deneb-obj-3",
+          "name": "Денеб III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "deneb-obj-4",
+          "name": "Станція «Денеб»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "arcturus",
+      "name": "Арктур",
+      "x": 520,
+      "y": 480,
+      "star_color": "orange",
+      "neighbors": [
+        "proxima",
+        "altair",
+        "canopus",
+        "denebola"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "arcturus-obj-1",
+          "name": "Арктур I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "arcturus-obj-2",
+          "name": "Станція «Арктур»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "arcturus-obj-3",
+          "name": "Поле Арктур",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "arcturus-obj-4",
+          "name": "Аномалія Арктур",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "arcturus-obj-5",
+          "name": "Арктур V",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "antares",
+      "name": "Антарес",
+      "x": -560,
+      "y": 390,
+      "star_color": "red",
+      "neighbors": [
+        "sirius",
+        "betelgeuse",
+        "fomalhaut"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "antares-obj-1",
+          "name": "Аномалія Антарес",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "antares-obj-2",
+          "name": "Поле Антарес",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "antares-obj-3",
+          "name": "Станція «Антарес»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "polaris",
+      "name": "Полярна",
+      "x": -920,
+      "y": -390,
+      "star_color": "yellow",
+      "neighbors": [
+        "deneb",
+        "castor"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "polaris-obj-1",
+          "name": "Полярна I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "polaris-obj-2",
+          "name": "Станція «Полярна»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "polaris-obj-3",
+          "name": "Полярна III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "polaris-obj-4",
+          "name": "Аномалія Полярна",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "capella",
+      "name": "Капелла",
+      "x": 930,
+      "y": -250,
+      "star_color": "yellow",
+      "neighbors": [
+        "vega",
+        "aldebaran",
+        "pollux"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "capella-obj-1",
+          "name": "Капелла I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "capella-obj-2",
+          "name": "Аномалія Капелла",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "capella-obj-3",
+          "name": "Капелла III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "capella-obj-4",
+          "name": "Капелла IV",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "betelgeuse",
+      "name": "Бетельгейзе",
+      "x": -980,
+      "y": 170,
+      "star_color": "red",
+      "neighbors": [
+        "rigel",
+        "antares",
+        "spica"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "betelgeuse-obj-1",
+          "name": "Бетельгейзе I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "betelgeuse-obj-2",
+          "name": "Поле Бетельгейзе",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "betelgeuse-obj-3",
+          "name": "Бетельгейзе III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "regulus",
+      "name": "Регул",
+      "x": 80,
+      "y": 700,
+      "star_color": "blue",
+      "neighbors": [
+        "proxima",
+        "denebola",
+        "fomalhaut"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "regulus-obj-1",
+          "name": "Регул I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "regulus-obj-2",
+          "name": "Поле Регул",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "regulus-obj-3",
+          "name": "Аномалія Регул",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "regulus-obj-4",
+          "name": "Регул IV",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "canopus",
+      "name": "Канопус",
+      "x": 1050,
+      "y": 530,
+      "star_color": "white",
+      "neighbors": [
+        "arcturus",
+        "aldebaran",
+        "denebola"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "canopus-obj-1",
+          "name": "Канопус I",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "canopus-obj-2",
+          "name": "Канопус II",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "canopus-obj-3",
+          "name": "Канопус III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "fomalhaut",
+      "name": "Фомальгаут",
+      "x": -360,
+      "y": 780,
+      "star_color": "orange",
+      "neighbors": [
+        "antares",
+        "regulus",
+        "spica"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "fomalhaut-obj-1",
+          "name": "Поле Фомальгаут",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "fomalhaut-obj-2",
+          "name": "Станція «Фомальгаут»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "fomalhaut-obj-3",
+          "name": "Станція «Фомальгаут»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "fomalhaut-obj-4",
+          "name": "Аномалія Фомальгаут",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "fomalhaut-obj-5",
+          "name": "Аномалія Фомальгаут",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "aldebaran",
+      "name": "Альдебаран",
+      "x": 1380,
+      "y": 40,
+      "star_color": "orange",
+      "neighbors": [
+        "altair",
+        "capella",
+        "pollux"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "aldebaran-obj-1",
+          "name": "Поле Альдебаран",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "aldebaran-obj-2",
+          "name": "Альдебаран II",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "aldebaran-obj-3",
+          "name": "Альдебаран III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "aldebaran-obj-4",
+          "name": "Альдебаран IV",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "castor",
+      "name": "Кастор",
+      "x": -1330,
+      "y": -520,
+      "star_color": "white",
+      "neighbors": [
+        "deneb",
+        "polaris",
+        "spica"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "castor-obj-1",
+          "name": "Станція «Кастор»",
+          "type": "Покинута станція",
+          "description": "Невідоме походження. Можливі залишки обладнання.",
+          "revealed": false
+        },
+        {
+          "id": "castor-obj-2",
+          "name": "Поле Кастор",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "castor-obj-3",
+          "name": "Аномалія Кастор",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "castor-obj-4",
+          "name": "Кастор IV",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "castor-obj-5",
+          "name": "Кастор V",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "pollux",
+      "name": "Поллукс",
+      "x": 1320,
+      "y": -610,
+      "star_color": "orange",
+      "neighbors": [
+        "capella",
+        "aldebaran",
+        "denebola"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "pollux-obj-1",
+          "name": "Аномалія Поллукс",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "pollux-obj-2",
+          "name": "Поллукс II",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        },
+        {
+          "id": "pollux-obj-3",
+          "name": "Поле Поллукс",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        },
+        {
+          "id": "pollux-obj-4",
+          "name": "Поле Поллукс",
+          "type": "Астероїдне поле",
+          "description": "Регіон із запасами металевих та кристалічних руд.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "spica",
+      "name": "Спіка",
+      "x": -1120,
+      "y": 720,
+      "star_color": "blue",
+      "neighbors": [
+        "betelgeuse",
+        "fomalhaut",
+        "castor"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "spica-obj-1",
+          "name": "Аномалія Спіка",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "spica-obj-2",
+          "name": "Аномалія Спіка",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "spica-obj-3",
+          "name": "Спіка III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    },
+    {
+      "id": "denebola",
+      "name": "Денебола",
+      "x": 500,
+      "y": 1030,
+      "star_color": "yellow",
+      "neighbors": [
+        "arcturus",
+        "regulus",
+        "canopus",
+        "pollux"
+      ],
+      "home": false,
+      "objects": [
+        {
+          "id": "denebola-obj-1",
+          "name": "Аномалія Денебола",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "denebola-obj-2",
+          "name": "Аномалія Денебола",
+          "type": "Невідомий об'єкт",
+          "description": "Сигнатура не класифікована. Потрібне сканування.",
+          "revealed": false
+        },
+        {
+          "id": "denebola-obj-3",
+          "name": "Денебола III",
+          "type": "Планета",
+          "description": "Потенційне небесне тіло для майбутньої колонізації.",
+          "revealed": false
+        }
+      ],
+      "discovered": false,
+      "accessible": false
+    }
+  ]
+}

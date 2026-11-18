@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "stages": [
+    {
+      "id": "awakening",
+      "title": "Пробудження",
+      "description": "Відновіть контроль над пошкодженою станцією."
+    },
+    {
+      "id": "first_power",
+      "title": "Перше живлення",
+      "description": "Побудуйте першу сонячну панель і відновіть енергопостачання."
+    }
+  ],
+  "salvage_reward": {
+    "metal": 130,
+    "energy": 35,
+    "crystals": 12,
+    "fuel": 10,
+    "credits": 50,
+    "science": 0
+  }
+}

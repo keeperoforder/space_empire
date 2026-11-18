@@ -1,0 +1,506 @@
+{
+  "chapters": [
+    {
+      "id": "awakening",
+      "title": "Пробудження",
+      "story": "Після століть сну центральний реактор знову подає ознаки життя. Протокол «Еос» відновлює системи, але архіви пошкоджені.",
+      "missions": [
+        "power",
+        "metal"
+      ]
+    },
+    {
+      "id": "first_resources",
+      "title": "Перші ресурси",
+      "story": "Астероїдні поля дадуть станції матеріали для відновлення промисловості.",
+      "missions": [
+        "mine",
+        "miner"
+      ]
+    },
+    {
+      "id": "new_horizon",
+      "title": "Новий горизонт",
+      "story": "Розвідувальний флот вирушає за межі домашньої системи.",
+      "missions": [
+        "scout",
+        "system"
+      ]
+    },
+    {
+      "id": "unknown_signal",
+      "title": "Невідомий сигнал",
+      "story": "Повторюваний сигнал не схожий на природне випромінювання. Його структура приховує координати.",
+      "missions": [
+        "scan",
+        "signal"
+      ]
+    },
+    {
+      "id": "lost_civilization",
+      "title": "Загублена цивілізація",
+      "story": "Покинута станція зберегла технологічні маркери цивілізації, якої немає в реєстрах.",
+      "missions": [
+        "three_systems",
+        "ancient"
+      ]
+    },
+    {
+      "id": "new_worlds",
+      "title": "Нові світи",
+      "story": "Планети різних типів можуть стати домом для нових колоністів.",
+      "missions": [
+        "colony",
+        "develop"
+      ]
+    },
+    {
+      "id": "beyond_known",
+      "title": "За межами відомого",
+      "story": "Сигнали ведуть у віддалений сектор, де потрібні сильний флот і запас палива.",
+      "missions": [
+        "eight_systems",
+        "fleet"
+      ]
+    },
+    {
+      "id": "galaxy_secret",
+      "title": "Таємниця галактики",
+      "story": "Усі фрагменти вказують на аномалію в центрі сектора. Вона пояснить зникнення попередників.",
+      "missions": [
+        "twelve_systems",
+        "research"
+      ]
+    }
+  ],
+  "missions": [
+    {
+      "id": "power",
+      "chapter": "awakening",
+      "title": "Повернути живлення",
+      "description": "Накопичте 100 одиниць енергії.",
+      "objective": {
+        "type": "resource",
+        "key": "energy",
+        "amount": 100
+      },
+      "rewards": {
+        "credits": 80,
+        "science": 10
+      }
+    },
+    {
+      "id": "metal",
+      "chapter": "awakening",
+      "title": "Перший запас металу",
+      "description": "Накопичте 150 одиниць металу.",
+      "objective": {
+        "type": "resource",
+        "key": "metal",
+        "amount": 150
+      },
+      "rewards": {
+        "credits": 100,
+        "science": 15
+      }
+    },
+    {
+      "id": "mine",
+      "chapter": "first_resources",
+      "title": "Інфраструктура видобутку",
+      "description": "Побудуйте видобувний комплекс.",
+      "objective": {
+        "type": "building",
+        "key": "crystal_extractor",
+        "amount": 1
+      },
+      "rewards": {
+        "metal": 100,
+        "credits": 120
+      }
+    },
+    {
+      "id": "miner",
+      "chapter": "first_resources",
+      "title": "Промисловий рейс",
+      "description": "Доставте 100 одиниць видобутих ресурсів.",
+      "objective": {
+        "type": "mined",
+        "amount": 100
+      },
+      "rewards": {
+        "fuel": 35,
+        "science": 20
+      }
+    },
+    {
+      "id": "scout",
+      "chapter": "new_horizon",
+      "title": "Очі імперії",
+      "description": "Побудуйте розвідувальний корабель.",
+      "objective": {
+        "type": "ship",
+        "key": "scout",
+        "amount": 1
+      },
+      "rewards": {
+        "fuel": 50,
+        "credits": 150
+      }
+    },
+    {
+      "id": "system",
+      "chapter": "new_horizon",
+      "title": "Сусідня зоря",
+      "description": "Відкрийте дві зоряні системи загалом.",
+      "objective": {
+        "type": "systems",
+        "amount": 2
+      },
+      "rewards": {
+        "science": 35,
+        "crystals": 10
+      }
+    },
+    {
+      "id": "scan",
+      "chapter": "unknown_signal",
+      "title": "Спектральний аналіз",
+      "description": "Завершіть технологію сенсорів або сканування.",
+      "objective": {
+        "type": "tech_keyword",
+        "keys": [
+          "mining_02",
+          "mining_01"
+        ]
+      },
+      "rewards": {
+        "science": 60,
+        "credits": 180
+      }
+    },
+    {
+      "id": "signal",
+      "chapter": "unknown_signal",
+      "title": "Відповідь у шумі",
+      "description": "Розшифруйте випадкову подію «Невідомий сигнал».",
+      "objective": {
+        "type": "flag",
+        "key": "signal_decoded",
+        "amount": 1
+      },
+      "rewards": {
+        "science": 80,
+        "crystals": 15
+      }
+    },
+    {
+      "id": "three_systems",
+      "chapter": "lost_civilization",
+      "title": "Архіви порожнечі",
+      "description": "Відкрийте три зоряні системи.",
+      "objective": {
+        "type": "systems",
+        "amount": 3
+      },
+      "rewards": {
+        "science": 100,
+        "crystals": 20
+      }
+    },
+    {
+      "id": "ancient",
+      "chapter": "lost_civilization",
+      "title": "Мова попередників",
+      "description": "Завершіть технологію з ключовим словом anomaly, energy або quantum.",
+      "objective": {
+        "type": "tech_keyword",
+        "keys": [
+          "energy_03",
+          "ai_03",
+          "mining_03"
+        ]
+      },
+      "rewards": {
+        "science": 120,
+        "credits": 250
+      }
+    },
+    {
+      "id": "colony",
+      "chapter": "new_worlds",
+      "title": "Перший форпост",
+      "description": "Заснуйте першу колонію.",
+      "objective": {
+        "type": "colonies",
+        "amount": 1
+      },
+      "rewards": {
+        "metal": 180,
+        "fuel": 60,
+        "credits": 250
+      }
+    },
+    {
+      "id": "develop",
+      "chapter": "new_worlds",
+      "title": "Самодостатній світ",
+      "description": "Розвиньте колонію до рівня 2.",
+      "objective": {
+        "type": "colony_level",
+        "amount": 2
+      },
+      "rewards": {
+        "science": 100,
+        "crystals": 25
+      }
+    },
+    {
+      "id": "eight_systems",
+      "chapter": "beyond_known",
+      "title": "Край карти",
+      "description": "Відкрийте вісім зоряних систем.",
+      "objective": {
+        "type": "systems",
+        "amount": 8
+      },
+      "rewards": {
+        "fuel": 120,
+        "science": 160
+      }
+    },
+    {
+      "id": "fleet",
+      "chapter": "beyond_known",
+      "title": "Флот далекого радіуса",
+      "description": "Майте три кораблі у флоті.",
+      "objective": {
+        "type": "fleet",
+        "amount": 3
+      },
+      "rewards": {
+        "credits": 400,
+        "metal": 250
+      }
+    },
+    {
+      "id": "twelve_systems",
+      "chapter": "galaxy_secret",
+      "title": "Серце сектора",
+      "description": "Відкрийте дванадцять зоряних систем.",
+      "objective": {
+        "type": "systems",
+        "amount": 12
+      },
+      "rewards": {
+        "science": 250,
+        "crystals": 50
+      }
+    },
+    {
+      "id": "research",
+      "chapter": "galaxy_secret",
+      "title": "Спадщина галактики",
+      "description": "Завершіть п'ять технологій.",
+      "objective": {
+        "type": "tech_count",
+        "amount": 5
+      },
+      "rewards": {
+        "credits": 1000,
+        "science": 300,
+        "crystals": 80
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "derelict",
+      "title": "Покинутий корабель",
+      "category": "Знахідка",
+      "illustration": "ship",
+      "description": "Сенсори виявили корабель без екіпажу. Реактор ще працює.",
+      "choices": [
+        {
+          "id": "salvage",
+          "label": "Розібрати на запчастини",
+          "description": "Отримати метал і кредити.",
+          "effects": {
+            "metal": 120,
+            "credits": 90
+          }
+        },
+        {
+          "id": "tow",
+          "label": "Буксирувати до станції",
+          "description": "Отримати наукові дані.",
+          "effects": {
+            "science": 45,
+            "crystals": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "asteroid",
+      "title": "Рідкісний астероїд",
+      "category": "Ресурси",
+      "illustration": "asteroid",
+      "description": "Виявлено тіло з чистими кристалічними жилами.",
+      "choices": [
+        {
+          "id": "extract",
+          "label": "Видобути руду",
+          "description": "Кристали та метал.",
+          "effects": {
+            "crystals": 28,
+            "metal": 65
+          }
+        },
+        {
+          "id": "scan",
+          "label": "Просканувати",
+          "description": "Наукові дані.",
+          "effects": {
+            "science": 55
+          }
+        }
+      ]
+    },
+    {
+      "id": "failure",
+      "title": "Технічна аварія",
+      "category": "Небезпека",
+      "illustration": "warning",
+      "description": "У допоміжному контурі станції стався збій.",
+      "choices": [
+        {
+          "id": "repair",
+          "label": "Негайний ремонт",
+          "description": "Витратити 45 металу, відновити енергію.",
+          "costs": {
+            "metal": 45
+          },
+          "effects": {
+            "energy": 60
+          }
+        },
+        {
+          "id": "isolate",
+          "label": "Ізолювати контур",
+          "description": "Зберегти матеріали, втратити енергію.",
+          "effects": {
+            "energy": -100
+          }
+        }
+      ]
+    },
+    {
+      "id": "signal",
+      "title": "Невідомий сигнал",
+      "category": "Сюжет",
+      "illustration": "signal",
+      "description": "Повторюваний сигнал містить математичну структуру. Можливо, це маяк.",
+      "choices": [
+        {
+          "id": "decode",
+          "label": "Розшифрувати сигнал",
+          "description": "Витратити 5 кристалів, отримати науку.",
+          "costs": {
+            "crystals": 5
+          },
+          "effects": {
+            "science": 70
+          },
+          "flags": [
+            "signal_decoded"
+          ]
+        },
+        {
+          "id": "reply",
+          "label": "Відповісти імпульсом",
+          "description": "Надіслати відповідь невідомому джерелу.",
+          "effects": {
+            "credits": 100,
+            "science": 25
+          },
+          "flags": [
+            "signal_answered"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ancient",
+      "title": "Стародавні технології",
+      "category": "Артефакт",
+      "illustration": "artifact",
+      "description": "У уламках конструкції знайдено працездатний квантовий модуль.",
+      "choices": [
+        {
+          "id": "study",
+          "label": "Вивчити модуль",
+          "description": "Наукові дані та кристали.",
+          "effects": {
+            "science": 110,
+            "crystals": 12
+          },
+          "flags": [
+            "ancient_module_studied"
+          ]
+        },
+        {
+          "id": "integrate",
+          "label": "Інтегрувати в станцію",
+          "description": "Енергія та метал.",
+          "effects": {
+            "energy": 140,
+            "metal": 80
+          },
+          "flags": [
+            "ancient_module_integrated"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "Контакт із чужою цивілізацією",
+      "category": "Дипломатія",
+      "illustration": "contact",
+      "description": "На каналі зв'язку з'являється інопланетний сигнал. Перекладачі розпізнали символ мирного контакту.",
+      "choices": [
+        {
+          "id": "peace",
+          "label": "Запропонувати мирний обмін",
+          "description": "Знання, кристали та кредити.",
+          "effects": {
+            "science": 90,
+            "crystals": 18,
+            "credits": 180
+          },
+          "flags": [
+            "alien_contact_peaceful"
+          ]
+        },
+        {
+          "id": "cautious",
+          "label": "Зберігати дистанцію",
+          "description": "Отримати фрагмент даних і паливо.",
+          "effects": {
+            "science": 45,
+            "fuel": 45
+          },
+          "flags": [
+            "alien_contact_cautious"
+          ]
+        }
+      ]
+    }
+  ],
+  "event_settings": {
+    "first_event_delay": 90,
+    "minimum_interval": 150,
+    "maximum_interval": 300
+  }
+}
