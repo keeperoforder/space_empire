@@ -1,5 +1,6 @@
 """Live resource strip with detailed per-resource hover information."""
 import pygame
+from graphics.asset_library import scaled_sprite
 from ui import theme
 
 
