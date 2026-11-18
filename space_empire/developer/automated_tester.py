@@ -136,14 +136,40 @@ class AutomatedCampaignTester:
             if not ok and "Недостатньо ресурсів" not in message and "already built" not in message:
                 self._fail(mission, "BLOCKED", message, "buildings.start_build", game.buildings.definition(key).get("cost"))
             return
+        if kind == "mining_ship":
+            if len(game.mining.ships) >= target:
+                return
+            if not game.mining.ships:
+                ok, message = game.mining.build_ship()
+                self.current_step = "Build mining ship via MiningManager.build_ship"
+                if not ok and self.elapsed_without_progress > 120:
+                    self._fail(mission, "BLOCKED", message, "mining.build_ship", game.mining.SHIP_COST)
+            return
         if kind == "mined":
             if game.mining.delivered_total >= target:
                 return
             if not game.mining.ships:
                 ok, message = game.mining.build_ship()
                 self.current_step = "Build mining ship via MiningManager.build_ship"
-                if not ok and "Недостатньо ресурсів" not in message and self.elapsed_without_progress > 90:
-                    self._fail(mission, "BLOCKED", message, "mining.build_ship", game.mining.SHIP_COST)
+                if not ok:
+                    if self.elapsed_without_progress > 120:
+                        self._fail(mission, "BLOCKED", message, "mining.build_ship", game.mining.SHIP_COST)
+                    return
+            ship = next((s for s in game.mining.ships if s.task == "docked"), None)
+            if ship is not None:
+                asteroid = game.mining.asteroids.get(ship.assigned_target_id)
+                if asteroid is None or asteroid.reserve <= 0:
+                    asteroid = next((a for a in game.mining.asteroids.values() if a.reserve > 0), None)
+                if asteroid is None:
+                    self._fail(mission, "BLOCKED", "No asteroid with remaining reserves.", "mining.assign_ship")
+                    return
+                fuel_needed = game.mining._round_trip_fuel(ship, asteroid)
+                ok, message = game.mining.assign_ship(ship.id, asteroid.id)
+                self.current_step = f"Dispatch {ship.id} to {asteroid.id} via MiningManager.assign_ship"
+                if not ok:
+                    self._fail(mission, "BLOCKED", message, "mining.assign_ship", {"fuel": fuel_needed})
+                elif ship.task == "docked" and self.elapsed_without_progress > 120:
+                    self._fail(mission, "BLOCKED", "Mining ship is docked because available fuel cannot cover a round trip.", "mining.assign_ship", {"fuel": fuel_needed})
             return
         if kind in ("ship", "fleet"):
             ship_type = key if kind == "ship" else "scout"

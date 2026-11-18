@@ -21,6 +21,13 @@ class CampaignFuelAndSidebarFixTests(unittest.TestCase):
         self.assertGreaterEqual(available_before_station - mandatory_build_fuel, 0)
         self.assertEqual(mining_reward, 60)
 
+    def test_campaign_requires_mining_ship_before_mining_delivery(self):
+        campaign = json.loads((ROOT / "campaign/campaign.json").read_text(encoding="utf-8"))
+        missions = {mission["id"]: mission for mission in campaign["missions"]}
+        self.assertEqual(missions["mine"]["objective"], {"type": "mining_ship", "amount": 1})
+        self.assertEqual(missions["miner"]["objective"]["type"], "mined")
+        chapter = next(item for item in campaign["chapters"] if item["id"] == "first_resources")
+        self.assertEqual(chapter["missions"], ["mine", "miner"])
     def test_fuel_plant_is_not_required_before_station_stage(self):
         balance = json.loads((ROOT / "balance/progression_balance.json").read_text(encoding="utf-8"))
         self.assertNotIn("fuel_plant", balance["available_buildings_by_stage"]["station"])
