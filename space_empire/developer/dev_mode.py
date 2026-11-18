@@ -289,6 +289,11 @@ class DeveloperMode:
             self.automated_tester.update(dt)
 
     def handle_event(self, event):
+        tester_active = bool(self.automated_tester and self.automated_tester.state in ("RUNNING", "PAUSED"))
+        if tester_active and event.type == pygame.KEYDOWN and event.key in (
+                pygame.K_F2, pygame.K_F3, pygame.K_F4, pygame.K_F7):
+            self.log("Manual resource cheats are disabled during automated testing.")
+            return True
         if event.type == pygame.KEYDOWN and self.amount_entry:
             if event.key == pygame.K_RETURN:
                 try:
@@ -374,6 +379,15 @@ class DeveloperMode:
                     "credits": lambda: self.adjust_resource("credits", 500),
                     "science": lambda: self.adjust_resource("science", 50),
                 }
+                manual_actions = {
+                    "metal", "energy", "fuel", "crystals", "credits", "science",
+                    "remove_metal", "remove_energy", "instant_build", "research",
+                    "techs", "buildings", "ships", "complete", "skip", "reset",
+                    "chapters", "build_selected", "upgrade_selected", "mission_next",
+                }
+                if tester_active and key in manual_actions:
+                    self.log("Manual developer cheats are disabled during automated testing.")
+                    return True
                 actions[key]()
                 return True
         return False
