@@ -307,6 +307,10 @@ class DeveloperMode:
             elif event.unicode and (event.unicode.isdigit() or event.unicode in ".,"):
                 self.amount_buffer += event.unicode.replace(",", ".")
             return True
+        if tester_active and event.type == pygame.KEYDOWN and event.key in (
+                pygame.K_F2, pygame.K_F3, pygame.K_F4, pygame.K_F7):
+            self.log("Manual resource cheats are disabled during automated testing.")
+            return True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_F2:
             self.amount_entry = True
             self.amount_buffer = ""
