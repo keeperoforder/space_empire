@@ -33,3 +33,14 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 - Save compatibility has not been runtime-tested.
 - The automated runner uses a separate test-save path; its isolation still requires verification by launching the game.
 - `scout` tutorial unlock ordering and full 16-mission campaign feasibility remain unverified.
+
+
+## Follow-up repair — 2026-11-18
+
+- Sidebar geometry now clamps the navigation frame to the viewport and adapts row spacing for the 13 entries.
+- Right information panel width is responsive; Developer Mode reserves its live width and hides its overlay when no safe center column remains.
+- UI logging now formats the captured exception traceback explicitly and reports log-write failures to stderr.
+- Campaign ship objectives and the automated tester now share CampaignManager's completed-ship count. FleetManager's existing completion path registers a ship in `fleet.ships` only when construction finishes.
+- Dependency install attempted from `space_empire/requirements.txt` (`pygame-ce>=2.5.3,<3.0`, `pyinstaller>=6.10,<7.0`); PyPI DNS/network is unavailable, so Pygame could not be installed. Graphical launch and visual tests remain unverified.
+- Source regression tests and the full 120-second scout campaign scenario were not run in this environment. The runtime NameError traceback was not present; logging is improved, but its originating name is not yet identified.
+- No save schema, missions, resources, assets, or save files were changed. Save migration remains unverified.

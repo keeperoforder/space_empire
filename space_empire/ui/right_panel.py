@@ -5,6 +5,10 @@ from ui import theme
 class RightPanel:
     WIDTH = 260
 
+    @staticmethod
+    def width_for(screen_width):
+        return max(150, min(RightPanel.WIDTH, int(screen_width * 0.24)))
+
     def __init__(self):
         self.slide = 0.0
         self.target = 1.0
@@ -19,15 +23,16 @@ class RightPanel:
 
     def draw(self, surface, station_selected):
         w, h = surface.get_size()
-        x = w - self.WIDTH - 12
+        width = self.width_for(w)
+        x = w - width - 12
         y = 86
         panel_h = max(360, h - 190)
         # Slight slide from the right edge.
-        x += int((1.0 - self.slide) * (self.WIDTH + 20))
-        r = pygame.Rect(x, y, self.WIDTH, panel_h)
+        x += int((1.0 - self.slide) * (width + 20))
+        r = pygame.Rect(x, y, width, panel_h).clip(surface.get_rect())
         theme.panel(surface, r, fill=(7, 17, 32), border=theme.BORDER_BRIGHT)
         theme.label(surface, "TACTICAL DATA", (x + 16, y + 15), 10, theme.MUTED, True)
-        pygame.draw.line(surface, theme.BORDER, (x + 14, y + 40), (x + self.WIDTH - 14, y + 40))
+        pygame.draw.line(surface, theme.BORDER, (x + 14, y + 40), (x + width - 14, y + 40))
         title = "ОРБІТАЛЬНА СТАНЦІЯ" if self.section == "Огляд" else self.section.upper()
         theme.label(surface, title, (x + 16, y + 55), 14, theme.CYAN, True)
         if self.section == "Огляд":
@@ -43,17 +48,17 @@ class RightPanel:
             for name, value, ratio, tint in stats:
                 theme.label(surface, name, (x + 16, sy), 11, theme.MUTED)
                 theme.label(surface, value, (x + 151, sy), 11, theme.TEXT, True)
-                track = pygame.Rect(x + 16, sy + 19, self.WIDTH - 32, 5)
+                track = pygame.Rect(x + 16, sy + 19, width - 32, 5)
                 pygame.draw.rect(surface, (22, 39, 57), track, border_radius=3)
                 pygame.draw.rect(surface, tint,
                                  (track.x, track.y, max(2, int(track.width * ratio)), track.height),
                                  border_radius=3)
                 sy += 48
-            pygame.draw.line(surface, theme.BORDER, (x + 15, sy), (x + self.WIDTH - 15, sy))
+            pygame.draw.line(surface, theme.BORDER, (x + 15, sy), (x + width - 15, sy))
             theme.label(surface, "ENERGY OUTPUT", (x + 16, sy + 18), 10, theme.MUTED, True)
             pygame.draw.rect(surface, (24, 43, 60), (x + 16, sy + 39, self.WIDTH - 32, 8), border_radius=4)
             pygame.draw.rect(surface, theme.CYAN, (x + 16, sy + 39, int((self.WIDTH - 32) * .78), 8), border_radius=4)
-            theme.label(surface, "78%", (x + self.WIDTH - 48, sy + 55), 11, theme.CYAN, True)
+            theme.label(surface, "78%", (x + width - 48, sy + 55), 11, theme.CYAN, True)
         else:
             theme.label(surface, "РОЗДІЛ У РОЗРОБЦІ", (x + 16, y + 91), 12, theme.GOLD, True)
             lines = ["Інтерфейс розділу активний.",

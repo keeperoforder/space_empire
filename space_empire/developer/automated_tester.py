@@ -192,8 +192,8 @@ class AutomatedCampaignTester:
             return
         if kind in ("ship", "fleet"):
             ship_type = key if kind == "ship" else "scout"
-            count = sum(s.ship_type == ship_type for s in game.fleet.ships)
-            if (count if kind == "ship" else len(game.fleet.ships)) >= target:
+            count = cm._progress(obj) if kind == 'ship' else len(game.fleet.ships)
+            if count >= target:
                 return
             if not game.buildings.count("hangar"):
                 ok, message = self._start_build("hangar")

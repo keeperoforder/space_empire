@@ -74,10 +74,12 @@ class HUD:
             log_path.parent.mkdir(parents=True, exist_ok=True)
             with log_path.open("a", encoding="utf-8") as stream:
                 stream.write("\n" + message + "\n")
-                stream.write(traceback.format_exc())
+                stream.writelines(traceback.format_exception(type(exc), exc, exc.__traceback__))
                 stream.write("\n")
-        except OSError:
-            pass
+        except OSError as log_error:
+            import sys
+            print(f'Space Empire UI error log failed: {log_error}', file=sys.stderr)
+            print(message, file=sys.stderr)
 
     def _safe_panel_event(self, panel, event, component):
         return self.panel_guard.handle_event(panel, event, component)

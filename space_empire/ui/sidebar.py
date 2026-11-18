@@ -148,18 +148,18 @@ class Sidebar:
     def draw(self, surface):
         x, y = 12, 86
         h = surface.get_height()
-        panel_h = max(360, h - 190)
-        rect = pygame.Rect(x, y, self.WIDTH, panel_h)
+        panel_h = max(1, min(h - y - 8, h - 190))
+        rect = pygame.Rect(x, y, self.WIDTH, panel_h).clip(surface.get_rect())
         theme.panel(surface, rect, fill=(8, 18, 33))
         theme.label(surface, "НАВІГАЦІЯ", (x + 16, y + 13), 13, theme.TEXT, True)
         self.rects.clear()
         list_top = y + 39
         footer_h = 39
         self._list_rect = pygame.Rect(x+5, list_top, self.WIDTH-10,
-                                      max(80, panel_h-48-footer_h))
+                                      max(0, min(rect.bottom - footer_h, surface.get_height() - 8) - list_top))
         available_h = self._list_rect.height
-        self._item_step = max(31, min(45, available_h // min(len(self.ITEMS), 13)))
-        visible_count = max(1, available_h // self._item_step)
+        self._item_step = max(20, min(34, available_h // max(1, len(self.ITEMS))))
+        visible_count = max(1, min(len(self.ITEMS), available_h // self._item_step))
         self.scroll_offset = max(0, min(self._max_scroll(), self.scroll_offset))
         for index in range(self.scroll_offset, min(len(self.ITEMS), self.scroll_offset+visible_count)):
             kind, name = self.ITEMS[index]

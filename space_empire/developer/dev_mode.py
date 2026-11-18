@@ -401,10 +401,16 @@ class DeveloperMode:
             return
         w,h=surface.get_size()
         # Keep the developer overlay left of the fixed tactical information panel.
-        right_panel_width = 260
-        panel_width = min(360, max(220, w - 520))
-        panel_x = max(232, w - right_panel_width - panel_width - 16)
-        panel = pygame.Rect(panel_x, 78, panel_width, max(260, h - 88))
+        right_panel = getattr(getattr(self.game, 'hud', None), 'right', None)
+        right_panel_width = right_panel.width_for(w) if right_panel else max(150, min(260, int(w * 0.24)))
+        left_edge = 244
+        available_width = w - right_panel_width - 24 - left_edge
+        if available_width < 150 or h < 220:
+            self.buttons = {}
+            return
+        panel_width = min(360, available_width)
+        panel_x = left_edge
+        panel = pygame.Rect(panel_x, 78, panel_width, max(1, h - 86)).clip(surface.get_rect())
         shade=pygame.Surface(panel.size,pygame.SRCALPHA); shade.fill((5,13,27,238))
         surface.blit(shade,panel.topleft)
         pygame.draw.rect(surface,(61,174,215),panel,2,border_radius=10)

@@ -24,7 +24,7 @@ class CampaignManager:
         if t=="building": return sum(len(v) for k,v in self.buildings.owned.items() if k==o["key"])
         if t=="mined": return getattr(self.mining,"delivered_total",0)
         if t=="mining_ship": return len(getattr(self.mining,"ships",[]))
-        if t=="ship": return sum(s.ship_type==o["key"] for s in self.fleet.ships)
+        if t=="ship": return sum(getattr(ship, "ship_type", None)==o["key"] for ship in self.fleet.ships)
         if t=="fleet": return len(self.fleet.ships)
         if t=="systems": return sum(bool(s.get("discovered")) for s in self.galaxy.systems.values())
         if t=="colonies": return len(getattr(self.colonies,"colonies",[]))
