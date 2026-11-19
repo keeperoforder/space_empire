@@ -214,6 +214,28 @@ class AutomatedCampaignTester:
                 return
             scouts = game.galaxy.available_scouts(game.fleet)
             if not scouts:
+                existing_scouts = [ship for ship in game.fleet.ships
+                                   if ship.ship_type == "scout"]
+                scout_construction = any(
+                    project.get("ship_type") == "scout"
+                    for project in game.fleet.constructions
+                )
+                if scout_construction:
+                    self.current_step = "Wait for scout construction to finish"
+                    return
+                if existing_scouts:
+                    # Campaign ship progress counts owned scouts, but an expedition
+                    # requires a ready, idle scout. Build another through the real
+                    # FleetManager path rather than treating ownership as availability.
+                    if not game.buildings.count("hangar"):
+                        ok, message = self._start_build("hangar")
+                        self.current_step = "Build hangar for an available scout"
+                    else:
+                        ok, message = game.fleet.build_ship("scout")
+                        self.current_step = "Build an additional scout via FleetManager"
+                    if not ok and "Недостатньо ресурсів" not in message and self.elapsed_without_progress > 90:
+                        self._fail(mission, "BLOCKED", message, "fleet.build_ship(scout)")
+                    return
                 proxy = {"id": mission["id"], "title": mission["title"],
                          "objective": {"type": "ship", "key": "scout", "amount": 1}}
                 self._execute(proxy)
