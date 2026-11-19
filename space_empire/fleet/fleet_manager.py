@@ -171,14 +171,20 @@ class FleetManager:
             if ship.ship_type == "miner":
                 continue
             cost = ship.spec["maintenance"] * ticks * self.technology_bonuses.get("maintenance_multiplier", 1.0)
-            if self.resources.spend({"credits": cost}):
-                ship.maintenance_due = max(0.0, ship.maintenance_due - cost)
+            # Never interrupt an active mission because the station temporarily
+            # cannot pay upkeep. Defer the full charge until the ship is idle.
+            if ship.status != "ready" or ship.task != "idle":
+                ship.maintenance_due += cost
+                continue
+            total_due = ship.maintenance_due + cost
+            if self.resources.spend({"credits": total_due}):
+                ship.maintenance_due = 0.0
                 if ship.status == "maintenance":
                     ship.hull = min(ship.max_hull, ship.hull + 2.0 * ticks)
                     if ship.hull >= ship.max_hull * 0.95:
                         ship.status = "ready"
             else:
-                ship.maintenance_due += cost
+                ship.maintenance_due = total_due
                 ship.status = "maintenance"
                 ship.task = "idle"
                 ship.hull = max(1.0, ship.hull - 0.08 * ticks)
