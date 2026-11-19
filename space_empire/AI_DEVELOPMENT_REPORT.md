@@ -71,3 +71,6 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 - Full deterministic automated campaign execution, including the reported 120-second scout timeout, remains unverified. The new test isolates the real ship production and mission progression chain.
 - NameError root causes remain unverified pending the actual `space_empire/saves/ui_errors.log` traceback from the affected runtime. The source inspection does not show a missing `math` import or missing `resource_glyph` helper.
 - Save compatibility: no save schema, mission data, resource balance, building catalogue, technology, asset, or save-file format was changed. Developer Mode presentation state is runtime-only and not serialized; existing save compatibility is expected to remain unchanged but was not runtime-tested.
+
+- Commit: `04c696c274b5ad16219b3e9c6ba5f954b534b803`; push to `main`: successful.
+- Test execution status: not run in this environment. The test file is committed, but its assertions are not recorded as passing.
