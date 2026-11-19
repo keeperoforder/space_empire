@@ -100,7 +100,7 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 
 ### Regression coverage and actual verification
 
-- Added tests covering selection of every supported multiplier, rejection of unsupported values, the tester-aware Pause/Resume/Stop transitions, visible speed selector wiring, and the existing `Game.update()` delta-time multiplier.
+- Added tests covering selection of every supported multiplier, rejection of unsupported values, an actual speed-button click dispatch, the tester-aware Pause/Resume/Stop transitions, visible speed selector wiring, and the existing `Game.update()` delta-time multiplier.
 - **Tests not executed:** this environment has no runnable checkout with the project's Python/Pygame dependencies, and no CI workflow run was available to execute the suite. The new tests are committed but are not reported as passing.
 - **Graphical verification not executed:** compact/expanded rendering, click interaction, and live simulation-speed timing still require a local Pygame run. No visual or runtime success is claimed.
 - Source-level review confirms the six selector values match the existing engine constants and the selector writes the value consumed by `Game.update()`.
