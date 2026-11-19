@@ -109,3 +109,18 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 
 - Changes were committed and pushed directly to `main` as requested.
 - No campaign, economy, gameplay, navigation, asset, save-schema, or unrelated files were changed.
+
+## Development Session — Campaign scout availability recovery (2026-11-19)
+
+### Change prepared on branch `fix/campaign-scout-availability`
+
+- Corrected the automated tester's `systems` objective recovery path. Campaign objective progress counts owned scout ships, while galaxy expeditions require a scout whose status is `ready` and task is `idle`. Previously, an owned but unavailable scout caused the tester to re-enter the already-satisfied `ship: scout` objective and take no action.
+- The tester now waits for an already queued scout construction, or orders an additional scout through the real `FleetManager.build_ship("scout")` path when an owned scout is unavailable. The normal hangar prerequisite and resource costs remain enforced. It does not change campaign progress or discover systems directly.
+- Added focused regression tests for unavailable-owned-scout replacement and avoiding duplicate scout construction.
+
+### Verification and scope
+
+- The patch is committed only to the working feature branch; it has not been merged or pushed to `main`.
+- Python/Pygame tests and the full 16-mission runtime campaign have **not** been executed in this environment. These tests are authored, not reported as passing.
+- The other previously identified potential blockers (research prerequisites/laboratory setup, unrelated active events, and colonizer recovery) remain to be investigated and tested. This patch does not establish full-campaign completion.
+- No claim of campaign success is made.
