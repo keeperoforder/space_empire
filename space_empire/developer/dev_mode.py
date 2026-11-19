@@ -13,7 +13,7 @@ class DeveloperMode:
         self.game = game
         self.visible = True
         self.compact = True
-        self.collapsed = False
+        self.collapsed = True
         self._content_rect = pygame.Rect(0, 0, 0, 0)
         self.paused = False
         self.speed_index = 0
@@ -432,16 +432,39 @@ class DeveloperMode:
         def txt(value,x,y,font=body,color=(205,224,239)):
             surface.blit(font.render(str(value)[:54],True,color),(x,y))
         self.buttons={}
+        self._content_rect = pygame.Rect(0, 0, 0, 0)
         x,y=panel.x+14,panel.y+12
-        txt("DEVELOPER / TEST MODE",x,y,title,(100,220,255)); y+=30
-        toggle_rect = pygame.Rect(panel.right-88, panel.y+8, 76, 22)
+        toggle_width = 76 if panel.width >= 260 else 50
+        toggle_rect = pygame.Rect(panel.right-toggle_width-12, panel.y+8, toggle_width, 22)
         self.buttons["toggle_compact"] = toggle_rect
         pygame.draw.rect(surface,(13,47,68),toggle_rect,border_radius=5)
         pygame.draw.rect(surface,(49,131,164),toggle_rect,1,border_radius=5)
-        surface.blit(small.render("FULL" if self.compact else "COMPACT",True,(218,237,248)),(toggle_rect.x+6,toggle_rect.y+5))
+        toggle_label = "FULL" if self.compact else "COMPACT"
+        if toggle_width < 60:
+            toggle_label = "MODE"
+        surface.blit(small.render(toggle_label,True,(218,237,248)),
+                     (toggle_rect.x+6,toggle_rect.y+5))
         if self.collapsed:
-            txt("Collapsed — press F11 to expand",x,y,small)
+            header_font = pygame.font.SysFont("segoeui", 18 if panel.width >= 260 else 13, True)
+            header_label = "DEVELOPER / TEST MODE" if panel.width >= 300 else "DEV MODE"
+            txt(header_label, x, panel.y+6, header_font, (100,220,255))
+            tester = self.automated_tester
+            if tester:
+                summary = (f"AUTO {tester.state} {len(tester.results)}/"
+                           f"{len(self.game.campaign_manager.missions)}")
+                color = (255,120,120) if tester.errors else (100,225,180)
+                if tester.errors:
+                    summary += " | " + str(tester.errors[-1].get("reason", "Error"))
+            else:
+                summary = "STATUS: " + self.status
+                color = (255,202,125)
+            max_text_width = max(0, toggle_rect.x-x-8)
+            while summary and small.size(summary)[0] > max_text_width:
+                summary = summary[:-4] + "..." if len(summary) > 4 else ""
+            if summary:
+                txt(summary, x, panel.y+29, small, color)
             return
+        y += 30
         cm=self.game.campaign_manager
         current=next((m for m in cm.missions.values() if m["status"]=="available"),None)
         chapter=cm.current_chapter()
