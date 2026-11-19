@@ -137,7 +137,7 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 ### Changes on `fix/campaign-scout-maintenance`
 - Fleet upkeep is now deferred while a non-miner ship is actively assigned or in transit. Unpaid upkeep accumulates as `maintenance_due` and is charged when the ship becomes idle.
 - The tester no longer purchases duplicate scouts when an owned scout is in maintenance. It waits for legitimate maintenance recovery, and reports a specific blocked reason if credits cannot recover and credit income is zero.
-- Added a regression test for waiting on an existing maintenance scout without spending resources.
+- Added regression tests for waiting on an existing maintenance scout without spending resources and for preserving an active expedition when upkeep credits run out.
 
 ### Verification
 - Source changes and regression tests committed to a separate feature branch.
