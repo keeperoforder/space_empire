@@ -11,6 +11,7 @@ from mining import MiningManager
 from fleet import FleetManager, SHIP_TYPES
 from campaign import CampaignManager
 from developer.dev_mode import DeveloperMode, SPEEDS
+from developer.automated_tester import AutomatedCampaignTester
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -62,6 +63,52 @@ class ScoutMissionFlowTests(unittest.TestCase):
         self.campaign._recalculate()
         self.assertEqual(self.campaign._progress(mission["objective"]), 1)
         self.assertEqual(mission["status"], "completed")
+
+
+
+class AutomatedTesterScoutAvailabilityTests(unittest.TestCase):
+    def _make_tester(self, construction=False):
+        scout = SimpleNamespace(ship_type="scout", status="maintenance", task="idle")
+        fleet = SimpleNamespace(
+            ships=[scout],
+            constructions=([{"ship_type": "scout"}] if construction else []),
+        )
+        fleet.build_calls = []
+        def build_ship(ship_type):
+            fleet.build_calls.append(ship_type)
+            return True, "queued"
+        fleet.build_ship = build_ship
+        buildings = SimpleNamespace(count=lambda key: 1)
+        galaxy = SimpleNamespace(
+            systems={"sol": {"discovered": True},
+                     "vega": {"discovered": False, "accessible": True}},
+            expeditions={},
+            available_scouts=lambda current_fleet: [],
+            launch_expedition=lambda *args: self.fail("Unavailable scout must not launch"),
+        )
+        campaign = SimpleNamespace(_progress=lambda objective: 1)
+        game = SimpleNamespace(fleet=fleet, buildings=buildings, galaxy=galaxy,
+                               campaign_manager=campaign)
+        tester = AutomatedCampaignTester.__new__(AutomatedCampaignTester)
+        tester.game = game
+        tester.current_step = ""
+        tester.elapsed_without_progress = 0
+        tester._fail = lambda *args, **kwargs: self.fail("Unexpected tester failure")
+        return tester, fleet
+
+    def test_unavailable_owned_scout_triggers_legitimate_replacement_build(self):
+        tester, fleet = self._make_tester()
+        tester._execute({"id": "systems", "title": "Nearby Star",
+                         "objective": {"type": "systems", "amount": 2}})
+        self.assertEqual(fleet.build_calls, ["scout"])
+        self.assertIn("FleetManager", tester.current_step)
+
+    def test_existing_scout_construction_is_not_duplicated(self):
+        tester, fleet = self._make_tester(construction=True)
+        tester._execute({"id": "systems", "title": "Nearby Star",
+                         "objective": {"type": "systems", "amount": 2}})
+        self.assertEqual(fleet.build_calls, [])
+        self.assertIn("Wait for scout construction", tester.current_step)
 
 
 class _FakeAutomatedTester:
