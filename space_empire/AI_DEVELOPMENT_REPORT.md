@@ -74,3 +74,5 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 
 - Commit: `04c696c274b5ad16219b3e9c6ba5f954b534b803`; push to `main`: successful.
 - Test execution status: not run in this environment. The test file is committed, but its assertions are not recorded as passing.
+
+- Follow-up within Session 1: collapsed Developer Mode now reduces to a 48 px header; compact mode displays automated-test state/progress and latest error while retaining scroll access to the full control list.

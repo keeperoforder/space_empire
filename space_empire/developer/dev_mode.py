@@ -421,7 +421,7 @@ class DeveloperMode:
             return
         panel_width = min(360, available_width)
         panel_x = left_edge
-        panel_height = min(340 if self.compact else 560, h - 100)
+        panel_height = 48 if self.collapsed else min(340 if self.compact else 560, h - 100)
         panel = pygame.Rect(panel_x, 78, panel_width, max(1, panel_height)).clip(surface.get_rect())
         shade=pygame.Surface(panel.size,pygame.SRCALPHA); shade.fill((5,13,27,238))
         surface.blit(shade,panel.topleft)
@@ -451,7 +451,14 @@ class DeveloperMode:
             obj=current["objective"]
             txt(f"Requirement: {obj['type']} {obj.get('key','')} {obj.get('amount',1)}",x,y,small,(255,205,115)); y+=17
         txt(f"Speed: {self.speed}x | {'PAUSED' if self.paused else 'RUNNING'}",x,y,(body),(255,205,115)); y+=24
-        txt("RESOURCES",x,y,title,(100,220,255)); y+=24
+        if self.automated_tester:
+            tester=self.automated_tester
+            txt(f"AUTO: {tester.state} | {len(tester.results)}/{len(self.game.campaign_manager.missions)} missions",
+                x,y,small,(100,225,180)); y+=16
+            if tester.errors:
+                txt("ERROR: " + tester.errors[-1]["reason"],x,y,small,(255,120,120)); y+=16
+        if not self.compact:
+            txt("RESOURCES",x,y,title,(100,220,255)); y+=24
         if not self.compact:
             for key,r in list(self.game.economy.resources.items())[:6]:
                 txt(f"{key}: {r.amount:.1f} / {r.capacity:.0f}",x,y,small); y+=16
