@@ -110,6 +110,15 @@ class AutomatedTesterScoutAvailabilityTests(unittest.TestCase):
         self.assertEqual(fleet.build_calls, [])
         self.assertIn("Wait for scout construction", tester.current_step)
 
+    def test_maintenance_scout_waits_instead_of_building_a_duplicate(self):
+        tester, fleet = self._make_tester()
+        credits = SimpleNamespace(amount=100, balance=3.0)
+        tester.game.economy = SimpleNamespace(get=lambda key: credits)
+        tester._execute({"id": "systems", "title": "Nearby Star",
+                         "objective": {"type": "systems", "amount": 2}})
+        self.assertEqual(fleet.build_calls, [])
+        self.assertIn("maintenance recovery", tester.current_step)
+
 
 class _FakeAutomatedTester:
     def __init__(self):
