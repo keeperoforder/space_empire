@@ -486,22 +486,4 @@ class DeveloperMode:
             pygame.draw.rect(surface,(49,131,164),rect,1,border_radius=5)
             surface.blit(small.render(label,True,(218,237,248)),(rect.x+6,rect.y+5))
         surface.set_clip(old_clip)
-        txt("F11 collapse | F12 hide | F8 resource | F2 exact | F3/F4 adjust | F6 building",x,panel.bottom-18,small,(125,195,225))
-        if self.amount_entry:
-            y += 16
-            txt(f"Set {self.selected_resource}: {self.amount_buffer}_  [ENTER]",x,y,small,(255,215,130))
-        y += 16
-        if self.automated_tester:
-            tester=self.automated_tester
-            chapter=tester._chapter_for(tester.current_mission_id) if tester.current_mission_id else None
-            txt(f"AUTO: {tester.state} | {len(tester.results)}/{len(self.game.campaign_manager.missions)} missions",x,y,small,(100,225,180)); y+=15
-            txt(f"Chapter: {chapter['title'] if chapter else '—'} | Mission: {tester.current_mission_id or '—'}",x,y,small); y+=15
-            txt("Step: "+tester.current_step,x,y,small,(255,205,120)); y+=15
-            txt(f"Completed: {len(tester.results)} | Errors: {len(tester.errors)} | Failed ops: {len(tester.failed_operations)}",x,y,small); y+=15
-            if tester.errors:
-                latest=tester.errors[-1]
-                txt(f"ERROR {latest['error_id']}: {latest['reason']}",x,y,small,(255,120,120)); y+=15
-                txt(f"Required: {latest.get('required')} | Available: {latest.get('available')}",x,y,small,(255,180,140)); y+=15
-        txt("STATUS: "+self.status,x,y,small,(255,202,125))
-        for msg in self.messages[-3:]:
-            y+=15; txt(msg,x,y,small,(151,190,213))
+        txt('F11 collapse | F12 hide | STATUS: ' + self.status, x, panel.bottom-18, small, (255,202,125))
