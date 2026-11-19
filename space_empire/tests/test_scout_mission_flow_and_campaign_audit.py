@@ -64,6 +64,33 @@ class ScoutMissionFlowTests(unittest.TestCase):
         self.assertEqual(self.campaign._progress(mission["objective"]), 1)
         self.assertEqual(mission["status"], "completed")
 
+    def test_unpaid_upkeep_does_not_interrupt_active_scout_expedition(self):
+        ok, message = self.buildings.start_build("hangar")
+        self.assertTrue(ok, message)
+        self.buildings.update(self.buildings.definition("hangar")["build_time"])
+        ok, message = self.fleet.build_ship("scout")
+        self.assertTrue(ok, message)
+        duration = next(p["duration"] for p in self.fleet.constructions
+                        if p["ship_type"] == "scout")
+        self.fleet.update(duration)
+        scout = next(ship for ship in self.fleet.ships if ship.ship_type == "scout")
+
+        credits = self.resources.get("credits")
+        credits.amount = 0.0
+        scout.task, scout.status = "explore", "outbound"
+        original_hull = scout.hull
+        self.fleet._maintenance(1.0)
+
+        self.assertEqual(scout.task, "explore")
+        self.assertEqual(scout.status, "outbound")
+        self.assertEqual(scout.hull, original_hull)
+        self.assertGreater(scout.maintenance_due, 0.0)
+
+        scout.task, scout.status = "idle", "ready"
+        credits.amount = 10.0
+        self.fleet._maintenance(1.0)
+        self.assertEqual(scout.maintenance_due, 0.0)
+
 
 
 class AutomatedTesterScoutAvailabilityTests(unittest.TestCase):
