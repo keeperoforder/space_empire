@@ -78,3 +78,35 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 - Follow-up within Session 1: collapsed Developer Mode now reduces to a 48 px header; compact mode displays automated-test state/progress and latest error while retaining scroll access to the full control list.
 
 - Final Session 1 commit: `8c3673d73209ab0786165c1ab20a91e8d19b1b62`; pushed to `main` successfully.
+
+## Development Session 2 — Developer Mode default layout
+
+### Changes implemented
+
+- `developer/dev_mode.py`: Developer Mode now starts collapsed. The collapsed header remains 48 px high and displays live automated-test state and completed/total mission count; the latest tester error is shown when present. Without an active tester, the header displays the current Developer Mode status.
+- The collapsed header adapts its title and mode-toggle width for narrow center columns. It continues to reserve space for the right tactical panel and retains the existing F11 expand/collapse and F12 hide/show shortcuts.
+- The scroll hit area is reset while collapsed so a stale expanded-panel rectangle cannot intercept mouse-wheel input.
+- `tests/test_scout_mission_flow_and_campaign_audit.py`: updated regression assertions to require collapsed-by-default behavior, the 48 px collapsed height, live tester summary, F11/F12 controls, and retained compact/full toggle.
+
+### Root cause
+
+- The prior layout code already implemented a 48 px collapsed state, but initialized `self.collapsed = False`. Consequently the game opened with the expanded compact panel (up to 340 px), continuing to obscure the central scene. The collapsed branch also showed only a generic instruction instead of useful test progress/error state.
+
+### Verification
+
+- Inspected the current `main` source and development report before editing.
+- Changes were made on isolated branch `fix/developer-mode-default-collapsed`, based on the inspected `main` commit; main was not modified.
+- Regression test source was updated. Python tests and Pygame runtime were **not executed** in this environment; no passing test result or visual confirmation is claimed.
+- GitHub commit writes for the implementation and regression assertions succeeded. A final branch diff review is required before merge.
+
+### Remaining problems
+
+- Verify visually at supported resolutions that the 48 px header and status line do not overlap the title, toggle, tactical panel, or gameplay scene.
+- Run the focused unittest and full available test suite in an environment with the project's dependencies installed.
+- Scout mission runtime progression, technology prerequisites, and all campaign missions remain outside this UI-only change and still require deterministic runtime testing.
+
+### Git status
+
+- Branch: `fix/developer-mode-default-collapsed`
+- Changes are committed and pushed to the branch through GitHub's file update API.
+- No merge to `main` has been performed.
