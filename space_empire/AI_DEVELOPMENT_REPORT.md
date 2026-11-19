@@ -78,3 +78,34 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 - Follow-up within Session 1: collapsed Developer Mode now reduces to a 48 px header; compact mode displays automated-test state/progress and latest error while retaining scroll access to the full control list.
 
 - Final Session 1 commit: `8c3673d73209ab0786165c1ab20a91e8d19b1b62`; pushed to `main` successfully.
+
+
+## Development Session — Restore automated test speed controls (2026-11-19)
+
+### Main-branch inspection
+
+- Inspected the latest `main` sources for `developer/dev_mode.py`, `developer/automated_tester.py`, `game.py`, the focused campaign regression tests, and this report.
+- The existing simulation multiplier list was already `(1, 2, 5, 10, 50, 100)`. `Game.update()` multiplies the simulation delta by `dev_tools.speed`, and the automated tester receives that scaled delta. The engine therefore already supports all six values; no simulation-engine change was needed.
+- The panel exposed only one cycling `Speed` action at the end of the scrollable action list. The selected value was not represented by a dedicated visible selector.
+- Duplicate `pause` and `resume` entries in the click-action dictionary overwrote the tester-aware handlers. The visible buttons therefore changed the panel pause flag without reliably changing the tester state.
+
+### Changes
+
+- Added six explicit speed-selection controls: 1x, 2x, 5x, 10x, 50x and 100x. They remain visible outside the scrollable action list in both compact and expanded layouts.
+- Highlighted the selected speed and added a clear `TEST SPEED: Nx` status line.
+- Connected each speed button to the existing simulation multiplier through `set_test_speed()`; retained F9 speed cycling.
+- Preserved the selected speed when Play or Restart creates a fresh automated-test game instance.
+- Corrected Pause, Resume and Stop handlers so they update both the tester state and Developer Mode pause state. F10 now uses the same pause/resume handlers.
+- Left F11/F12 handling, gameplay systems, campaign data, economy, navigation and graphics unchanged.
+
+### Regression coverage and actual verification
+
+- Added tests covering selection of every supported multiplier, rejection of unsupported values, the tester-aware Pause/Resume/Stop transitions, visible speed selector wiring, and the existing `Game.update()` delta-time multiplier.
+- **Tests not executed:** this environment has no runnable checkout with the project's Python/Pygame dependencies, and no CI workflow run was available to execute the suite. The new tests are committed but are not reported as passing.
+- **Graphical verification not executed:** compact/expanded rendering, click interaction, and live simulation-speed timing still require a local Pygame run. No visual or runtime success is claimed.
+- Source-level review confirms the six selector values match the existing engine constants and the selector writes the value consumed by `Game.update()`.
+
+### Git status
+
+- Changes were committed and pushed directly to `main` as requested.
+- No campaign, economy, gameplay, navigation, asset, save-schema, or unrelated files were changed.
