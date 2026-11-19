@@ -173,7 +173,7 @@ class FleetManager:
             cost = ship.spec["maintenance"] * ticks * self.technology_bonuses.get("maintenance_multiplier", 1.0)
             # Never interrupt an active mission because the station temporarily
             # cannot pay upkeep. Defer the full charge until the ship is idle.
-            if ship.status != "ready" or ship.task != "idle":
+            if ship.task != "idle" or ship.status not in ("ready", "maintenance"):
                 ship.maintenance_due += cost
                 continue
             total_due = ship.maintenance_due + cost
