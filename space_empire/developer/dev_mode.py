@@ -12,6 +12,9 @@ class DeveloperMode:
     def __init__(self, game):
         self.game = game
         self.visible = True
+        self.compact = True
+        self.collapsed = False
+        self._content_rect = pygame.Rect(0, 0, 0, 0)
         self.paused = False
         self.speed_index = 0
         self.status = "Developer Mode active"
@@ -316,6 +319,13 @@ class DeveloperMode:
             self.amount_buffer = ""
             self.log(f"Enter exact amount for {self.selected_resource}")
             return True
+        if event.type == pygame.MOUSEWHEEL and self.visible and self._content_rect.collidepoint(pygame.mouse.get_pos()):
+            self.scroll = max(0, self.scroll - event.y * 3)
+            return True
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
+            self.collapsed = not self.collapsed
+            self.scroll = 0
+            return True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_F12:
             self.visible = not self.visible
             return True
@@ -349,7 +359,7 @@ class DeveloperMode:
         if not self.visible or event.type != pygame.MOUSEBUTTONDOWN or event.button != 1:
             return False
         for key, rect in self.buttons.items():
-            if rect.collidepoint(event.pos):
+            if rect.collidepoint(event.pos) and (key == "toggle_compact" or self._content_rect.collidepoint(event.pos)):
                 actions = {
                     "play_test": self.start_automated_test,
                     "pause": lambda: (self.automated_tester.pause() if self.automated_tester else None, setattr(self, "paused", True)),
@@ -361,6 +371,7 @@ class DeveloperMode:
                     "pause": lambda: setattr(self, "paused", True),
                     "resume": lambda: setattr(self, "paused", False),
                     "speed": lambda: setattr(self, "speed_index", (self.speed_index+1)%len(SPEEDS)),
+                    "toggle_compact": lambda: (setattr(self, "compact", not self.compact), setattr(self, "scroll", 0)),
                     "instant_build": self.instant_build,
                     "research": self.complete_research,
                     "techs": self.unlock_all_technologies,
@@ -410,7 +421,8 @@ class DeveloperMode:
             return
         panel_width = min(360, available_width)
         panel_x = left_edge
-        panel = pygame.Rect(panel_x, 78, panel_width, max(1, h - 86)).clip(surface.get_rect())
+        panel_height = min(340 if self.compact else 560, h - 100)
+        panel = pygame.Rect(panel_x, 78, panel_width, max(1, panel_height)).clip(surface.get_rect())
         shade=pygame.Surface(panel.size,pygame.SRCALPHA); shade.fill((5,13,27,238))
         surface.blit(shade,panel.topleft)
         pygame.draw.rect(surface,(61,174,215),panel,2,border_radius=10)
@@ -419,8 +431,17 @@ class DeveloperMode:
         small=pygame.font.SysFont("segoeui",12)
         def txt(value,x,y,font=body,color=(205,224,239)):
             surface.blit(font.render(str(value)[:54],True,color),(x,y))
+        self.buttons={}
         x,y=panel.x+14,panel.y+12
         txt("DEVELOPER / TEST MODE",x,y,title,(100,220,255)); y+=30
+        toggle_rect = pygame.Rect(panel.right-88, panel.y+8, 76, 22)
+        self.buttons["toggle_compact"] = toggle_rect
+        pygame.draw.rect(surface,(13,47,68),toggle_rect,border_radius=5)
+        pygame.draw.rect(surface,(49,131,164),toggle_rect,1,border_radius=5)
+        surface.blit(small.render("FULL" if self.compact else "COMPACT",True,(218,237,248)),(toggle_rect.x+6,toggle_rect.y+5))
+        if self.collapsed:
+            txt("Collapsed — press F11 to expand",x,y,small)
+            return
         cm=self.game.campaign_manager
         current=next((m for m in cm.missions.values() if m["status"]=="available"),None)
         chapter=cm.current_chapter()
@@ -431,11 +452,12 @@ class DeveloperMode:
             txt(f"Requirement: {obj['type']} {obj.get('key','')} {obj.get('amount',1)}",x,y,small,(255,205,115)); y+=17
         txt(f"Speed: {self.speed}x | {'PAUSED' if self.paused else 'RUNNING'}",x,y,(body),(255,205,115)); y+=24
         txt("RESOURCES",x,y,title,(100,220,255)); y+=24
-        for key,r in list(self.game.economy.resources.items())[:6]:
-            txt(f"{key}: {r.amount:.1f} / {r.capacity:.0f}",x,y,small); y+=16
+        if not self.compact:
+            for key,r in list(self.game.economy.resources.items())[:6]:
+                txt(f"{key}: {r.amount:.1f} / {r.capacity:.0f}",x,y,small); y+=16
         y+=5
-        txt("ACTIONS",x,y,title,(100,220,255)); y+=28
-        self.buttons={}
+        txt("ACTIONS — scroll to access all controls",x,y,small,(100,220,255)); y+=20
+        self._content_rect = pygame.Rect(panel.x+8,y,panel.width-16,max(1,panel.bottom-y-24))
         self.buttons["play_test"] = pygame.Rect(x, y, panel.width-28, 30)
         play_rect = self.buttons["play_test"]
         pygame.draw.rect(surface, (12, 76, 96), play_rect, border_radius=6)
@@ -451,15 +473,20 @@ class DeveloperMode:
                ("skip","Next mission"),("reset","Reset missions"),("audit","Run campaign audit"),
                ("speed",f"Speed: {self.speed}x")]
         bw=(panel.width-36)//2
+        row_h=29
+        max_scroll=max(0,((len(specs)+1)//2)*row_h-self._content_rect.height)
+        self.scroll=max(0,min(self.scroll,max_scroll))
+        old_clip=surface.get_clip()
+        surface.set_clip(self._content_rect)
         for i,(key,label) in enumerate(specs):
             col=i%2; row=i//2
-            rect=pygame.Rect(x+col*(bw+8),y+row*29,bw,25)
+            rect=pygame.Rect(x+col*(bw+8),y+row*row_h-self.scroll,bw,25)
             self.buttons[key]=rect
             pygame.draw.rect(surface,(13,47,68),(rect),border_radius=5)
             pygame.draw.rect(surface,(49,131,164),rect,1,border_radius=5)
             surface.blit(small.render(label,True,(218,237,248)),(rect.x+6,rect.y+5))
-        y+=((len(specs)+1)//2)*29+6
-        txt("F8 select resource | F2 set exact | F3 +100 | F4 -100 | F6 building",x,y,small,(125,195,225))
+        surface.set_clip(old_clip)
+        txt("F11 collapse | F12 hide | F8 resource | F2 exact | F3/F4 adjust | F6 building",x,panel.bottom-18,small,(125,195,225))
         if self.amount_entry:
             y += 16
             txt(f"Set {self.selected_resource}: {self.amount_buffer}_  [ENTER]",x,y,small,(255,215,130))

@@ -44,3 +44,30 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 - Dependency install attempted from `space_empire/requirements.txt` (`pygame-ce>=2.5.3,<3.0`, `pyinstaller>=6.10,<7.0`); PyPI DNS/network is unavailable, so Pygame could not be installed. Graphical launch and visual tests remain unverified.
 - Source regression tests and the full 120-second scout campaign scenario were not run in this environment. The runtime NameError traceback was not present; logging is improved, but its originating name is not yet identified.
 - No save schema, missions, resources, assets, or save files were changed. Save migration remains unverified.
+
+
+## Development Session 1 — 2026-11-19
+
+### Repository state and findings
+
+- Started from main at `87120a8b3e4e27a9e44f596b1a791b0cb09a2f46`.
+- Re-inspection found the prior Developer Mode geometry patch still rendered a tall panel (nearly the full window height), with no compact or collapsible state. This was the direct cause of the overlay continuing to obscure the play area.
+- Current sidebar source imports `math` and uses it for vector icon geometry. Current top bar imports `ui.theme`; `ui/theme.py` defines `resource_glyph`. No unresolved reference in these inspected paths explains the reported NameErrors. The original runtime tracebacks are not present in the repository, so their exact originating names cannot honestly be claimed fixed.
+- The current fleet production path enforces a completed hangar, charges the configured ship cost, queues a construction timer, and appends the new `Spaceship` to `FleetManager.ships` only on completion. CampaignManager evaluates the live registered fleet. A new targeted test now exercises this actual path without marking the objective complete by hand.
+- Campaign JSON audit: 8 chapters, 16 unique mission IDs, all 16 IDs linked exactly once from the chapter lists. The 16 objectives use the supported evaluator types: resource, mining_ship, mined, ship, systems, tech_keyword, flag, colonies, colony_level, fleet and tech_count. This is a structural audit, not a deterministic end-to-end playthrough of all 16 missions.
+
+### Changes in this session
+
+- `developer/dev_mode.py`: compact mode is the default; panel height is capped; expanded mode remains available; F11 collapses/expands, F12 hides/shows; the header control switches compact/full display; mouse-wheel scrolling exposes every existing test action; click hit-testing is restricted to visible content.
+- `tests/test_scout_mission_flow_and_campaign_audit.py`: adds real hangar → scout queue → completion → fleet registration → campaign objective test and structural checks for all 16 campaign missions.
+- Existing navigation implementation was inspected and left intact: all 13 entries, labels, vector icon branches, state handling, and click routing are present. No redesign was made.
+- Existing traceback logger in `ui/hud.py` already records the full exception stack using the captured exception. This session did not fabricate a root cause for the two reported NameErrors.
+
+### Verification results
+
+- Dependency install attempted: `python -m pip install 'pygame-ce>=2.5.3,<3.0'`. It failed because the environment cannot resolve PyPI (DNS failure). Graphical runtime, pixel-level panel overlap, station/planet clipping and live click transitions could not be verified here.
+- Campaign structure audit was evaluated against the current `campaign/campaign.json`: 8 chapters, 16 unique missions, all linked once; all objective types are represented by `CampaignManager._progress`.
+- New Python tests were added but could not be executed against a complete checkout in this environment. No test pass is claimed.
+- Full deterministic automated campaign execution, including the reported 120-second scout timeout, remains unverified. The new test isolates the real ship production and mission progression chain.
+- NameError root causes remain unverified pending the actual `space_empire/saves/ui_errors.log` traceback from the affected runtime. The source inspection does not show a missing `math` import or missing `resource_glyph` helper.
+- Save compatibility: no save schema, mission data, resource balance, building catalogue, technology, asset, or save-file format was changed. Developer Mode presentation state is runtime-only and not serialized; existing save compatibility is expected to remain unchanged but was not runtime-tested.
