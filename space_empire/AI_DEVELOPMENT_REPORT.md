@@ -124,3 +124,21 @@ Base revision: `62bb7c2ec9989d4a0b35d947bf3c88bf290db7fd`
 - Python/Pygame tests and the full 16-mission runtime campaign have **not** been executed in this environment. These tests are authored, not reported as passing.
 - The other previously identified potential blockers (research prerequisites/laboratory setup, unrelated active events, and colonizer recovery) remain to be investigated and tested. This patch does not establish full-campaign completion.
 - No claim of campaign success is made.
+
+
+## Development Session — Prevent expedition interruption from unpaid upkeep (2026-11-19)
+
+### Root cause identified from source
+- A scout can be sent on a galaxy expedition while its maintenance credits are being consumed.
+- When credits reach zero, `FleetManager._maintenance()` previously changed the ship to `maintenance` and forcibly set its task to `idle`, interrupting the expedition.
+- `GalaxyManager.update()` resumes interrupted returns only for ships in `ready` state. A ship marked `maintenance` therefore remains attached to the expedition and cannot return or reveal the system.
+- The automated tester's prior replacement-scout patch could then attempt to buy another scout despite the campaign's zero-credit income, creating an economic dead end.
+
+### Changes on `fix/campaign-scout-maintenance`
+- Fleet upkeep is now deferred while a non-miner ship is actively assigned or in transit. Unpaid upkeep accumulates as `maintenance_due` and is charged when the ship becomes idle.
+- The tester no longer purchases duplicate scouts when an owned scout is in maintenance. It waits for legitimate maintenance recovery, and reports a specific blocked reason if credits cannot recover and credit income is zero.
+- Added a regression test for waiting on an existing maintenance scout without spending resources.
+
+### Verification
+- Source changes and regression tests committed to a separate feature branch.
+- Python/Pygame test suite and full 16-mission runtime campaign have not been executed in this environment. No passing result is claimed.
