@@ -1,6 +1,7 @@
 """Real fleet-production path and structural audit of all campaign missions."""
 import json
 import unittest
+import pygame
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -88,6 +89,9 @@ class DeveloperModeSpeedControlTests(unittest.TestCase):
         self.tools.messages = []
         self.tools.paused = False
         self.tools.automated_tester = _FakeAutomatedTester()
+        self.tools.visible = True
+        self.tools.buttons = {}
+        self.tools._content_rect = pygame.Rect(100, 100, 1, 1)
 
     def test_every_supported_speed_can_be_selected(self):
         self.assertEqual(SPEEDS, (1, 2, 5, 10, 50, 100))
@@ -98,6 +102,12 @@ class DeveloperModeSpeedControlTests(unittest.TestCase):
                 self.assertIn(f"{factor}x", self.tools.status)
         self.assertFalse(self.tools.set_test_speed(3))
         self.assertEqual(self.tools.speed, 100)
+
+    def test_speed_button_click_changes_selected_simulation_speed(self):
+        self.tools.buttons = {"speed_50": pygame.Rect(10, 10, 40, 22)}
+        event = SimpleNamespace(type=pygame.MOUSEBUTTONDOWN, button=1, pos=(15, 15))
+        self.assertTrue(self.tools.handle_event(event))
+        self.assertEqual(self.tools.speed, 50)
 
     def test_pause_resume_and_stop_update_tester_state(self):
         self.tools.pause_automated_test()
