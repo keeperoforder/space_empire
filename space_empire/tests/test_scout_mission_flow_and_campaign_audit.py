@@ -84,9 +84,12 @@ class CampaignAuditStructureTests(unittest.TestCase):
     def test_developer_panel_is_compact_collapsible_and_scrollable(self):
         source = (ROOT / "developer" / "dev_mode.py").read_text(encoding="utf-8")
         self.assertIn("self.compact = True", source)
-        self.assertIn("self.collapsed = False", source)
+        self.assertIn("self.collapsed = True", source)
         self.assertIn("pygame.MOUSEWHEEL", source)
-        self.assertIn("panel_height = min(340 if self.compact else 560", source)
+        self.assertIn("panel_height = 48 if self.collapsed else min(340 if self.compact else 560, h - 100)", source)
+        self.assertIn('summary = (f"AUTO {tester.state}', source)
+        self.assertIn("pygame.K_F11", source)
+        self.assertIn("pygame.K_F12", source)
         self.assertIn('"toggle_compact": lambda', source)
 
     def test_navigation_and_topbar_imports_are_present(self):
