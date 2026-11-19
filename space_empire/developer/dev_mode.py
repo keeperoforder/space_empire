@@ -33,6 +33,32 @@ class DeveloperMode:
     def speed(self):
         return SPEEDS[self.speed_index]
 
+    def set_test_speed(self, factor):
+        """Select an existing simulation multiplier used by Game.update()."""
+        if factor not in SPEEDS:
+            return False
+        self.speed_index = SPEEDS.index(factor)
+        self.log(f"Automated test speed set to {factor}x")
+        return True
+
+    def pause_automated_test(self):
+        if self.automated_tester:
+            self.automated_tester.pause()
+        self.paused = True
+        self.log("Automated test paused")
+
+    def resume_automated_test(self):
+        if self.automated_tester:
+            self.automated_tester.resume()
+        self.paused = False
+        self.log("Automated test resumed")
+
+    def stop_automated_test(self):
+        if self.automated_tester:
+            self.automated_tester.stop()
+        self.paused = False
+        self.log("Automated test stopped")
+
     def log(self, message):
         self.status = str(message)
         self.messages.append(str(message))
@@ -278,9 +304,11 @@ class DeveloperMode:
         # run-scoped save and a fresh progression/economy state.
         game = self.game
         audio = getattr(game, "audio_manager", None)
+        selected_speed = self.speed
         from game import Game
         Game.__init__(game, load_saved=False, developer_mode=True, automated_test=True)
         game.audio_manager = audio
+        game.dev_tools.set_test_speed(selected_speed)
         from developer.automated_tester import AutomatedCampaignTester
         game.dev_tools.automated_tester = AutomatedCampaignTester(game)
         ok, message = game.dev_tools.automated_tester.start()
@@ -330,8 +358,10 @@ class DeveloperMode:
             self.visible = not self.visible
             return True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_F10:
-            self.paused = not self.paused
-            self.log("Paused" if self.paused else "Resumed")
+            if self.paused:
+                self.resume_automated_test()
+            else:
+                self.pause_automated_test()
             return True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_F9:
             self.speed_index = (self.speed_index + 1) % len(SPEEDS)
@@ -359,18 +389,19 @@ class DeveloperMode:
         if not self.visible or event.type != pygame.MOUSEBUTTONDOWN or event.button != 1:
             return False
         for key, rect in self.buttons.items():
-            if rect.collidepoint(event.pos) and (key == "toggle_compact" or self._content_rect.collidepoint(event.pos)):
+            if rect.collidepoint(event.pos) and (
+                    key == "toggle_compact" or key.startswith("speed_")
+                    or self._content_rect.collidepoint(event.pos)):
                 actions = {
                     "play_test": self.start_automated_test,
-                    "pause": lambda: (self.automated_tester.pause() if self.automated_tester else None, setattr(self, "paused", True)),
-                    "resume": lambda: (self.automated_tester.resume() if self.automated_tester else None, setattr(self, "paused", False)),
-                    "stop_test": lambda: self.automated_tester.stop() if self.automated_tester else None,
+                    "pause": self.pause_automated_test,
+                    "resume": self.resume_automated_test,
+                    "stop_test": self.stop_automated_test,
                     "restart_test": self.start_automated_test,
                     "export_error": lambda: self.automated_tester.export_error_report() if self.automated_tester else self.automated_campaign_audit(),
                     "export_full": lambda: self.automated_tester.export_full_report() if self.automated_tester else self.automated_campaign_audit(),
-                    "pause": lambda: setattr(self, "paused", True),
-                    "resume": lambda: setattr(self, "paused", False),
-                    "speed": lambda: setattr(self, "speed_index", (self.speed_index+1)%len(SPEEDS)),
+                    **{f"speed_{factor}": lambda factor=factor: self.set_test_speed(factor)
+                       for factor in SPEEDS},
                     "toggle_compact": lambda: (setattr(self, "compact", not self.compact), setattr(self, "scroll", 0)),
                     "instant_build": self.instant_build,
                     "research": self.complete_research,
@@ -450,13 +481,35 @@ class DeveloperMode:
         if current:
             obj=current["objective"]
             txt(f"Requirement: {obj['type']} {obj.get('key','')} {obj.get('amount',1)}",x,y,small,(255,205,115)); y+=17
-        txt(f"Speed: {self.speed}x | {'PAUSED' if self.paused else 'RUNNING'}",x,y,(body),(255,205,115)); y+=24
+        txt(f"TEST SPEED: {self.speed}x | {'PAUSED' if self.paused else 'RUNNING'}",
+            x,y,body,(255,205,115)); y+=24
         if self.automated_tester:
             tester=self.automated_tester
             txt(f"AUTO: {tester.state} | {len(tester.results)}/{len(self.game.campaign_manager.missions)} missions",
                 x,y,small,(100,225,180)); y+=16
             if tester.errors:
                 txt("ERROR: " + tester.errors[-1]["reason"],x,y,small,(255,120,120)); y+=16
+
+        # Keep all supported test speeds visible in both compact and expanded layouts.
+        speed_cols = 3
+        speed_gap = 5
+        speed_bw = (panel.width - 28 - speed_gap * (speed_cols - 1)) // speed_cols
+        for i, factor in enumerate(SPEEDS):
+            speed_rect = pygame.Rect(
+                x + (i % speed_cols) * (speed_bw + speed_gap),
+                y + (i // speed_cols) * 26, speed_bw, 22
+            )
+            speed_key = f"speed_{factor}"
+            self.buttons[speed_key] = speed_rect
+            selected = factor == self.speed
+            pygame.draw.rect(surface, (15, 91, 111) if selected else (13, 47, 68),
+                             speed_rect, border_radius=5)
+            pygame.draw.rect(surface, (78, 220, 244) if selected else (49, 131, 164),
+                             speed_rect, 2 if selected else 1, border_radius=5)
+            label = small.render(f"{factor}x", True, (245, 252, 255) if selected else (218, 237, 248))
+            surface.blit(label, label.get_rect(center=speed_rect.center))
+        y += 54
+
         if not self.compact:
             txt("RESOURCES",x,y,title,(100,220,255)); y+=24
         if not self.compact:
@@ -477,8 +530,7 @@ class DeveloperMode:
                ("instant_build","Finish construction"),("research","Finish research"),
                ("techs","Unlock all technologies"),("buildings","Unlock all buildings"),
                ("ships","Enable ship testing"),("complete","Complete mission"),
-               ("skip","Next mission"),("reset","Reset missions"),("audit","Run campaign audit"),
-               ("speed",f"Speed: {self.speed}x")]
+               ("skip","Next mission"),("reset","Reset missions"),("audit","Run campaign audit")]
         bw=(panel.width-36)//2
         row_h=29
         max_scroll=max(0,((len(specs)+1)//2)*row_h-self._content_rect.height)
