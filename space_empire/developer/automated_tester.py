@@ -224,17 +224,26 @@ class AutomatedCampaignTester:
                     self.current_step = "Wait for scout construction to finish"
                     return
                 if existing_scouts:
-                    # Campaign ship progress counts owned scouts, but an expedition
-                    # requires a ready, idle scout. Build another through the real
-                    # FleetManager path rather than treating ownership as availability.
-                    if not game.buildings.count("hangar"):
-                        ok, message = self._start_build("hangar")
-                        self.current_step = "Build hangar for an available scout"
-                    else:
-                        ok, message = game.fleet.build_ship("scout")
-                        self.current_step = "Build an additional scout via FleetManager"
-                    if not ok and "Недостатньо ресурсів" not in message and self.elapsed_without_progress > 90:
-                        self._fail(mission, "BLOCKED", message, "fleet.build_ship(scout)")
+                    # Do not spend more resources on duplicate scouts. FleetManager
+                    # defers upkeep while ships are on missions and repairs them once
+                    # they are idle and the accrued credits can be paid.
+                    maintenance_scouts = [ship for ship in existing_scouts
+                                          if ship.status == "maintenance"]
+                    if maintenance_scouts:
+                        credits = game.economy.get("credits")
+                        if credits.balance <= 0 and credits.amount + 1e-9 < sum(
+                                ship.maintenance_due + ship.spec["maintenance"]
+                                for ship in maintenance_scouts):
+                            self._fail(
+                                mission, "BLOCKED",
+                                "Scout maintenance cannot recover: credits are insufficient and credit income is zero.",
+                                "FleetManager._maintenance",
+                                {"credits": sum(ship.maintenance_due + ship.spec["maintenance"]
+                                                for ship in maintenance_scouts),
+                                 "credit_income_per_second": credits.balance},
+                            )
+                            return
+                    self.current_step = "Wait for existing scout maintenance recovery"
                     return
                 proxy = {"id": mission["id"], "title": mission["title"],
                          "objective": {"type": "ship", "key": "scout", "amount": 1}}
